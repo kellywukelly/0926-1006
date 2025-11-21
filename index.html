@@ -138,6 +138,37 @@
             font-size: 0.8em;
         }
 
+        /* 行程時間軸樣式 */
+        .timeline-box {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #e9d8a6;
+        }
+        .timeline-title {
+            font-weight: bold;
+            color: #9b2226;
+            margin-bottom: 10px;
+            display: block;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .timeline-item {
+            display: flex;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .timeline-time {
+            min-width: 55px;
+            font-weight: bold;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        .timeline-desc {
+            flex-grow: 1;
+        }
+
         .important-list li {
             margin-bottom: 8px;
         }
@@ -231,18 +262,43 @@
         </div>
         <div class="day-content">
             <p><span class="highlight-badge">亮點</span> 入住頂級五星海上Villa</p>
-            <ul>
-                <li>中午：抵達碼頭，登上五星級【印度支那號 (Indochine Premium Cruise)】。</li>
-                <li>享用遊輪自助午餐，航行於蘭夏灣與拜子龍灣。</li>
-                <li>下午行程 (依船公司安排)：
-                    <ul>
-                        <li>探訪【<a href="https://www.google.com/maps/search/?api=1&query=Sung+Sot+Cave" target="_blank" class="attraction-link">驚訝洞 (Surprise Cave)</a>】或迷宮洞：欣賞鐘乳石奇景。</li>
-                        <li>搭乘小舢舨或獨木舟探索【<a href="https://www.google.com/maps/search/?api=1&query=Luon+Cave" target="_blank" class="attraction-link">天井洞</a>】/007電影拍攝地。</li>
-                        <li>船上活動：越式春捲手作教學。</li>
-                    </ul>
-                </li>
-                <li>晚上：燭光晚餐、夜釣墨魚、甲板觀星。</li>
-            </ul>
+            
+            <div class="timeline-box">
+                <span class="timeline-title">🚢 Indochine Premium Cruise 參考行程 (Day 2)</span>
+                <div class="timeline-item">
+                    <span class="timeline-time">11:45</span>
+                    <span class="timeline-desc">抵達巡洲島碼頭。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">12:15</span>
+                    <span class="timeline-desc">搭乘接駁船登船，辦理入住，享用迎賓飲料，聽取簡報。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">13:15</span>
+                    <span class="timeline-desc">享用遊輪 Buffet 自助午餐。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">14:00</span>
+                    <span class="timeline-desc">航行於喀斯特地貌島嶼間。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">15:00</span>
+                    <span class="timeline-desc">前往【<a href="https://www.google.com/maps/search/?api=1&query=Sung+Sot+Cave" target="_blank" class="attraction-link">驚訝洞 (Surprise Cave)</a>】或迷宮洞探險。之後搭乘小舢舨或獨木舟探索【<a href="https://www.google.com/maps/search/?api=1&query=Luon+Cave" target="_blank" class="attraction-link">天井洞</a>】(007拍攝地)。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">17:30</span>
+                    <span class="timeline-desc">返回停泊區，越式春捲手作教學。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">19:30</span>
+                    <span class="timeline-desc">享用越式及西式美味套餐晚餐。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">20:45</span>
+                    <span class="timeline-desc">自由活動：甲板賞星、夜釣墨魚、桌遊。</span>
+                </div>
+            </div>
+
             <div class="meal-hotel-info">
                 <p>🍽️ <strong>早餐：</strong>飯店內 ｜ <strong>午餐：</strong>船上亞洲自助餐 ｜ <strong>晚餐：</strong>船上燭光聽潮晚宴 (每人一隻龍蝦)</p>
                 <p>🏨 <strong>住宿：</strong>Indochine Premium Cruise (露臺海景房)</p>
@@ -258,11 +314,32 @@
         </div>
         <div class="day-content">
             <p><strong>今日焦點：</strong>太極晨喚、英雄島、三十六古街</p>
+            
+             <div class="timeline-box">
+                <span class="timeline-title">🚢 Indochine Premium Cruise 參考行程 (Day 3)</span>
+                <div class="timeline-item">
+                    <span class="timeline-time">06:30</span>
+                    <span class="timeline-desc">輕早餐 (茶/咖啡/麵包)，甲板太極課程。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">07:45</span>
+                    <span class="timeline-desc">抵達【<a href="https://www.google.com/maps/search/?api=1&query=Titop+Island" target="_blank" class="attraction-link">英雄島 (Titop Island)</a>】，登高俯瞰下龍灣全景。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">09:00</span>
+                    <span class="timeline-desc">整理行李並退房。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">09:30</span>
+                    <span class="timeline-desc">返回大船，享用豐盛早午餐。</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">11:00</span>
+                    <span class="timeline-desc">抵達碼頭，結束海上旅程，返回河內。</span>
+                </div>
+            </div>
+
             <ul>
-                <li>06:30 早安太極課程。</li>
-                <li>前往【<a href="https://www.google.com/maps/search/?api=1&query=Titop+Island" target="_blank" class="attraction-link">英雄島 (Titop Island)</a>】：登高411階俯瞰下龍灣全景。</li>
-                <li>09:30 返航並享用早午餐，約11:00離船。</li>
-                <li>返回河內。</li>
                 <li>遊覽【<a href="https://www.google.com/maps/search/?api=1&query=Hoan+Kiem+Lake" target="_blank" class="attraction-link">還劍湖</a>】及【<a href="https://www.google.com/maps/search/?api=1&query=Hanoi+Old+Quarter" target="_blank" class="attraction-link">三十六古街</a>】(含電瓶車)。</li>
                 <li>漫步【懷舊法國區】：<a href="https://www.google.com/maps/search/?api=1&query=St.+Joseph's+Cathedral+Hanoi" target="_blank" class="attraction-link">聖約瑟夫大教堂</a>、<a href="https://www.google.com/maps/search/?api=1&query=Hanoi+Opera+House" target="_blank" class="attraction-link">百年歌劇院</a>外觀。</li>
             </ul>
