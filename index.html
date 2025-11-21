@@ -122,15 +122,20 @@
         }
 
         /* 地圖連結樣式 */
-        .map-link {
+        .map-link, .attraction-link {
             color: var(--primary-color);
             text-decoration: none;
             border-bottom: 1px dotted var(--primary-color);
             font-weight: bold;
         }
-        .map-link:hover {
+        .map-link:hover, .attraction-link:hover {
             color: var(--accent-color);
             border-bottom: 1px solid var(--accent-color);
+        }
+        
+        .attraction-link::after {
+            content: " ↗";
+            font-size: 0.8em;
         }
 
         .important-list li {
@@ -205,11 +210,11 @@
         <div class="day-content">
             <p><strong>今日焦點：</strong>越南民族博物館、女皇雙層纜車、摩天輪</p>
             <ul>
-                <li>抵達河內，前往【越南民族博物館】：了解53個少數民族文化縮影。</li>
+                <li>抵達河內，前往【<a href="https://www.google.com/maps/search/?api=1&query=Vietnam+Museum+of+Ethnology" target="_blank" class="attraction-link">越南民族博物館</a>】：了解53個少數民族文化縮影。</li>
                 <li>前往下龍市。</li>
-                <li>搭乘【女皇雙層景觀纜車】：金氏世界紀錄最大露天纜車。</li>
-                <li>參觀【日本花園】、【浪漫錦鯉橋】(IG打卡熱點)。</li>
-                <li>搭乘【太陽之眼摩天輪】：欣賞下龍灣高空美景。</li>
+                <li>搭乘【<a href="https://www.google.com/maps/search/?api=1&query=Sun+World+Ha+Long+Queen+Cable+Car" target="_blank" class="attraction-link">女皇雙層景觀纜車</a>】：金氏世界紀錄最大露天纜車。</li>
+                <li>參觀【<a href="https://www.google.com/maps/search/?api=1&query=Japanese+Garden+Sun+World+Ha+Long" target="_blank" class="attraction-link">日本花園</a>】、【<a href="https://www.google.com/maps/search/?api=1&query=Koi+Bridge+Sun+World+Ha+Long" target="_blank" class="attraction-link">浪漫錦鯉橋</a>】(IG打卡熱點)。</li>
+                <li>搭乘【<a href="https://www.google.com/maps/search/?api=1&query=Sun+Wheel+Ha+Long" target="_blank" class="attraction-link">太陽之眼摩天輪</a>】：欣賞下龍灣高空美景。</li>
                 <li>特別贈送：越式腳底按摩或全身按摩90分鐘 (12歲以下不贈送)。</li>
             </ul>
             <div class="meal-hotel-info">
@@ -231,8 +236,8 @@
                 <li>享用遊輪自助午餐，航行於蘭夏灣與拜子龍灣。</li>
                 <li>下午行程 (依船公司安排)：
                     <ul>
-                        <li>探訪【驚訝洞 (Surprise Cave)】或迷宮洞：欣賞鐘乳石奇景。</li>
-                        <li>搭乘小舢舨或獨木舟探索天井洞/007電影拍攝地。</li>
+                        <li>探訪【<a href="https://www.google.com/maps/search/?api=1&query=Sung+Sot+Cave" target="_blank" class="attraction-link">驚訝洞 (Surprise Cave)</a>】或迷宮洞：欣賞鐘乳石奇景。</li>
+                        <li>搭乘小舢舨或獨木舟探索【<a href="https://www.google.com/maps/search/?api=1&query=Luon+Cave+Halong+Bay" target="_blank" class="attraction-link">天井洞</a>】/007電影拍攝地。</li>
                         <li>船上活動：越式春捲手作教學。</li>
                     </ul>
                 </li>
@@ -255,11 +260,11 @@
             <p><strong>今日焦點：</strong>太極晨喚、英雄島、三十六古街</p>
             <ul>
                 <li>06:30 早安太極課程。</li>
-                <li>前往【英雄島 (Titop Island)】：登高411階俯瞰下龍灣全景。</li>
+                <li>前往【<a href="https://www.google.com/maps/search/?api=1&query=Titop+Island" target="_blank" class="attraction-link">英雄島 (Titop Island)</a>】：登高411階俯瞰下龍灣全景。</li>
                 <li>09:30 返航並享用早午餐，約11:00離船。</li>
                 <li>返回河內。</li>
-                <li>遊覽【還劍湖】及【三十六古街】(含電瓶車)。</li>
-                <li>漫步【懷舊法國區】：聖約瑟夫大教堂、百年歌劇院外觀。</li>
+                <li>遊覽【<a href="https://www.google.com/maps/search/?api=1&query=Hoan+Kiem+Lake" target="_blank" class="attraction-link">還劍湖</a>】及【<a href="https://www.google.com/maps/search/?api=1&query=Hanoi+Old+Quarter" target="_blank" class="attraction-link">三十六古街</a>】(含電瓶車)。</li>
+                <li>漫步【懷舊法國區】：<a href="https://www.google.com/maps/search/?api=1&query=St.+Joseph's+Cathedral+Hanoi" target="_blank" class="attraction-link">聖約瑟夫大教堂</a>、<a href="https://www.google.com/maps/search/?api=1&query=Hanoi+Opera+House" target="_blank" class="attraction-link">百年歌劇院</a>外觀。</li>
             </ul>
             <div class="meal-hotel-info">
                 <p>🍽️ <strong>早餐：</strong>船上樂活早午餐 ｜ <strong>午餐：</strong>越式九層蒸鮮塔 ｜ <strong>晚餐：</strong>越法融合創意料理+龍蝦吃到飽</p>
@@ -276,9 +281,9 @@
         <div class="day-content">
             <p><strong>今日焦點：</strong>長安湖輕舟探祕、碧洞古剎</p>
             <ul>
-                <li>前往寧平【長安湖生態保護區】(陸龍灣)。</li>
+                <li>前往寧平【<a href="https://www.google.com/maps/search/?api=1&query=Trang+An+Landscape+Complex" target="_blank" class="attraction-link">長安湖生態保護區</a>】(陸龍灣)。</li>
                 <li>搭乘小鐵皮舟 (4人一艘) 穿梭石灰岩洞穴與山巒之間。</li>
-                <li>參觀【三谷古剎~碧洞寺】：分為上中下三層的古廟，有「南天第二洞」之稱。</li>
+                <li>參觀【<a href="https://www.google.com/maps/search/?api=1&query=Bich+Dong+Pagoda" target="_blank" class="attraction-link">三谷古剎~碧洞寺</a>】：分為上中下三層的古廟，有「南天第二洞」之稱。</li>
                 <li>返回河內。</li>
             </ul>
             <div class="meal-hotel-info">
@@ -297,7 +302,7 @@
             <p><strong>今日焦點：</strong>鎮國寺、返家</p>
             <ul>
                 <li>飯店自由活動，享受設施。</li>
-                <li>參觀【鎮國寺】：河內最古老寺廟，西湖邊的佛教聖地。</li>
+                <li>參觀【<a href="https://www.google.com/maps/search/?api=1&query=Tran+Quoc+Pagoda" target="_blank" class="attraction-link">鎮國寺</a>】：河內最古老寺廟，西湖邊的佛教聖地。</li>
                 <li>午餐後前往機場，搭機返回溫暖的家。</li>
             </ul>
             <div class="meal-hotel-info">
