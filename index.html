@@ -1,240 +1,331 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台灣 ⇄ 冰島 航班行程互動總覽</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif; /* Assuming Inter is a good default, Tailwind uses system fonts by default */
-        }
-        .tab-active {
-            border-color: #0284c7; /* sky-600 */
-            color: #0284c7; /* sky-600 */
-            background-color: #f0f9ff; /* sky-50 */
-        }
-        .tab-inactive {
-            border-color: transparent;
-        }
-        .flight-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .flight-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-    </style>
-</head>
-<body class="bg-stone-100 text-stone-700 antialiased">
+import React, { useState, useEffect } from 'react';
+import { 
+  Waves, 
+  ArrowDown, 
+  ArrowRight, 
+  AlertTriangle, 
+  LifeBuoy, 
+  Wind, 
+  Eye, 
+  Activity,
+  Anchor,
+  Info
+} from 'lucide-react';
 
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-5xl">
-        <header class="mb-8 text-center">
-            <h1 class="text-3xl sm:text-4xl font-bold text-sky-700">台灣 ⇄ 冰島 夢幻航班行程 (9/26去-10/6抵台)</h1>
-            <p class="text-stone-600 mt-2">您的專屬航班計畫，一目了然，輕鬆啟程！</p>
-        </header>
-
-        <main>
-            <div class="mb-6 sm:mb-8">
-                <div class="border-b border-stone-300">
-                    <nav class="-mb-px flex space-x-1 sm:space-x-4 justify-center" aria-label="Tabs">
-                        <button id="tab-outbound" class="tab-active whitespace-nowrap py-3 px-4 sm:py-4 sm:px-6 border-b-2 font-medium text-sm sm:text-base rounded-t-md focus:outline-none">
-                            ✈️ 去程航班
-                        </button>
-                        <button id="tab-return" class="tab-inactive whitespace-nowrap py-3 px-4 sm:py-4 sm:px-6 border-b-2 font-medium text-sm sm:text-base rounded-t-md hover:text-sky-600 hover:border-sky-300 focus:outline-none">
-                            🏠 回程航班
-                        </button>
-                    </nav>
-                </div>
+const DowncurrentApp = () => {
+  const [activeTab, setActiveTab] = useState('intro');
+  
+  return (
+    <div className="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-blue-500 selection:text-white">
+      {/* Header */}
+      <header className="bg-blue-900/50 backdrop-blur-md border-b border-blue-700/30 sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="bg-blue-500 p-2 rounded-lg">
+              <Waves className="w-6 h-6 text-white" />
             </div>
+            <h1 className="text-xl font-bold tracking-wider">潛水安全指南：下降流</h1>
+          </div>
+        </div>
+      </header>
 
-            <div id="content-outbound">
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-sky-700 mb-1">啟程：踏上冰島的奇幻旅程</h2>
-                    <p class="text-stone-600 mb-6">以下是您從台灣出發，經西雅圖轉機前往冰島的航班詳細資訊。請確認各項細節，為精彩的冒險做好準備！</p>
-                    <div id="outbound-flights-container" class="space-y-6">
-                        </div>
-                </section>
-            </div>
+      {/* Navigation */}
+      <div className="bg-slate-800/50 border-b border-slate-700">
+        <div className="max-w-4xl mx-auto px-4">
+          <nav className="flex space-x-1 overflow-x-auto no-scrollbar py-2">
+            <NavButton id="intro" label="什麼是下降流" icon={<Info size={18} />} active={activeTab} onClick={setActiveTab} />
+            <NavButton id="signs" label="如何識別" icon={<Eye size={18} />} active={activeTab} onClick={setActiveTab} />
+            <NavButton id="action" label="緊急應對" icon={<LifeBuoy size={18} />} active={activeTab} onClick={setActiveTab} />
+            <NavButton id="prevention" label="預防觀念" icon={<Anchor size={18} />} active={activeTab} onClick={setActiveTab} />
+          </nav>
+        </div>
+      </div>
 
-            <div id="content-return" class="hidden">
-                <section class="mb-8">
-                     <h2 class="text-2xl font-semibold text-sky-700 mb-1">歸途：滿載回憶返回家園</h2>
-                    <p class="text-stone-600 mb-6">結束了難忘的冰島之旅，這是您返回台灣的航班安排。願您旅途平安，期待下次的相遇！</p>
-                    <div id="return-flights-container" class="space-y-6">
-                        </div>
-                </section>
-            </div>
+      {/* Main Content */}
+      <main className="max-w-4xl mx-auto px-4 py-8 pb-20">
+        {activeTab === 'intro' && <IntroSection />}
+        {activeTab === 'signs' && <SignsSection />}
+        {activeTab === 'action' && <ActionSection />}
+        {activeTab === 'prevention' && <PreventionSection />}
+      </main>
 
-            <section class="bg-sky-50 p-6 rounded-lg shadow-md mb-8 border border-sky-200">
-                <h2 class="text-2xl font-semibold text-sky-700 mb-4">📊 行程總覽與預估</h2>
-                <div class="space-y-3 text-stone-700">
-                    <div>
-                        <span class="font-medium">預估機票總金額：</span>
-                        <span class="font-bold text-orange-600">NTD $25,091</span> + <span class="font-bold text-orange-600">USD $782.6 = <span class="font-bold text-orange-600">約5萬</span>
-                        <p class="text-xs text-stone-500 mt-1">（此為各航段金額加總，未含匯率換算及其他可能費用如機場稅、行李費等，實際金額請依訂票時為準。）</p>
-                    </div>
-                    <div>
-                        <span class="font-medium">建議請假天數：</span>
-                        <span class="font-bold text-sky-600">4天半</span>
-                         <p class="text-xs text-stone-500 mt-1">（依據2025/09/26出發，2025/10/06抵台，10/07上班估算。）</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-2xl font-semibold text-sky-700 mb-4">📌 重要注意事項</h2>
-                <div class="prose prose-stone max-w-none text-stone-600 space-y-3">
-                    <p>此處整理了您規劃行程時需要特別留意的資訊，請仔細閱讀，確保旅程順利愉快。</p>
-                    <ul id="important-notes-list" class="list-disc pl-5 space-y-2">
-                        </ul>
-                </div>
-            </section>
-        </main>
-
-        <footer class="mt-12 text-center text-sm text-stone-500">
-            <p>&copy; <span id="currentYear"></span> 您的專屬行程規劃. 祝您旅途愉快！</p>
-        </footer>
+      {/* Footer */}
+      <footer className="bg-slate-950 py-8 text-center text-slate-500 text-sm border-t border-slate-800 mt-auto">
+        <p>© 2025 潛水安全教育資料 | 請始終遵守保守潛水原則</p>
+        <p className="mt-2 text-xs">免責聲明：本資訊僅供參考，實際潛水請依照當地導潛指示及自身訓練水平進行。</p>
+      </footer>
     </div>
+  );
+};
 
-    <script>
-        const flightData = {
-            outbound: [
-                {
-                    segmentName: "1. 台灣 → 西雅圖",
-                    airline: "星宇航空 JX32",
-                    origin: { name: "台灣桃園", code: "TPE", flag: "🇹🇼" },
-                    destination: { name: "西雅圖塔科馬", code: "SEA", flag: "🇺🇸" },
-                    departureDateTime: "2025/09/26 (週五) 晚上 08:10",
-                    arrivalDateTime: "2025/09/26 (週五) 下午 04:10",
-                    cost: "NTD$12648",
-                    remarks: "直飛。飛行時間約11小時。"
-                },
-                {
-                    segmentName: "2. 西雅圖 → 冰島",
-                    airline: "冰島航空  FI682",
-                    origin: { name: "西雅圖塔科馬", code: "SEA", flag: "🇺🇸" },
-                    destination: { name: "冰島凱夫拉維克", code: "KEF", flag: "🇮🇸" },
-                    departureDateTime: "2025/09/27 (週六) 下午 07:00",
-                    arrivalDateTime: "2025/09/28 (週日) 早上 09:25",
-                    cost: "USD$257.6",
-                    remarks: "直飛。飛行時間約7.5小時。<br>西雅圖轉機時間約26小時50分，需在西雅圖過夜。"
-                }
-            ],
-            return: [
-                {
-                    segmentName: "3. 冰島 → 西雅圖",
-                    airline: "冰島航空 FI683",
-                    origin: { name: "冰島凱夫拉維克", code: "KEF", flag: "🇮🇸" },
-                    destination: { name: "西雅圖塔科馬", code: "SEA", flag: "🇺🇸" },
-                    departureDateTime: "2025/10/04 (週六) 晚上 07:45",
-                    arrivalDateTime: "2025/10/04 (週六) 晚上 08:40",
-                    cost: "約USD$525",
-                    remarks: "直飛。飛行時間約7小時55分鐘。"
-                },
-                {
-                    segmentName: "4. 西雅圖 → 台灣",
-                    airline: "星宇航空 JX31",
-                    origin: { name: "西雅圖塔科馬", code: "SEA", flag: "🇺🇸" },
-                    destination: { name: "台灣桃園", code: "TPE", flag: "🇹🇼" },
-                    departureDateTime: "2025/10/05 (週日) 凌晨 01:15",
-                    arrivalDateTime: "2025/10/06 (週一) 凌晨 04:55",
-                    cost: "NTD$12443",
-                    remarks: "直飛。飛行時間約12小時40分。<br>西雅圖轉機時間約4小時35分鐘。<br>10/6抵台後有一整天可休息，準備10/7上班。"
-                }
-            ],
-            importantNotes: [
-                "金額：表格中的「金額」欄位請您依照實際查詢的票價填寫。機票價格會因預訂時間、艙等、航空公司促銷活動等因素而有很大變動。",
-                "航班時刻：所有航班時刻均為航空公司當時的排定，實際飛行前仍可能調整，請務必於出發前向航空公司確認。",
-                "簽證與護照：請務必確認您的護照效期（通常建議行程結束後仍有6個月以上效期），並提前辦理所需簽證（美國ESTA及申根簽證）。",
-                "轉機：國際轉機請預留充足時間，特別是不同航空公司。",
-                "住宿與當地交通：別忘了預訂在西雅圖（若過夜）及冰島的住宿與當地交通。",
-                "旅遊保險：強烈建議購買旅遊平安險及旅遊不便險。"
-            ]
-        };
+/* --- Components --- */
 
-        function createFlightCard(flight) {
-            return `
-                <div class="flight-card bg-white p-5 sm:p-6 rounded-lg shadow-lg border border-stone-200 hover:border-sky-300">
-                    <h3 class="text-xl font-semibold text-sky-700 mb-3">${flight.segmentName}</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm text-stone-600">
-                        <div>
-                            <p class="font-medium text-stone-800">✈️ 航空公司/航班：</p>
-                            <p>${flight.airline}</p>
-                        </div>
-                        <div>
-                            <p class="font-medium text-stone-800">💰 金額 (預估)：</p>
-                            <p class="text-orange-600 font-semibold">${flight.cost}</p>
-                        </div>
-                        <div class="sm:col-span-2 border-t border-stone-200 pt-4 mt-2">
-                            <div class="flex items-center justify-between space-x-2 sm:space-x-4">
-                                <div class="text-center flex-1">
-                                    <p class="text-xs text-stone-500">出發</p>
-                                    <p class="font-semibold text-lg text-sky-600">${flight.origin.flag} ${flight.origin.code}</p>
-                                    <p class="text-xs">${flight.origin.name}</p>
-                                    <p class="text-xs mt-1">${flight.departureDateTime}</p>
-                                </div>
-                                <div class="text-stone-400 text-2xl font-light self-center pb-5 sm:pb-6">→</div>
-                                <div class="text-center flex-1">
-                                    <p class="text-xs text-stone-500">抵達</p>
-                                    <p class="font-semibold text-lg text-sky-600">${flight.destination.flag} ${flight.destination.code}</p>
-                                    <p class="text-xs">${flight.destination.name}</p>
-                                    <p class="text-xs mt-1">${flight.arrivalDateTime}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-2 mt-2">
-                            <p class="font-medium text-stone-800">📝 備註：</p>
-                            <p class="prose prose-sm max-w-none">${flight.remarks.replace(/<br>/g, '<br>')}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+const NavButton = ({ id, label, icon, active, onClick }) => (
+  <button
+    onClick={() => onClick(id)}
+    className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-all duration-200 whitespace-nowrap ${
+      active === id 
+        ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' 
+        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+    }`}
+  >
+    {icon}
+    <span>{label}</span>
+  </button>
+);
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const outboundContainer = document.getElementById('outbound-flights-container');
-            const returnContainer = document.getElementById('return-flights-container');
-            const notesList = document.getElementById('important-notes-list');
+const IntroSection = () => {
+  return (
+    <div className="space-y-8 animate-fade-in">
+      <div className="bg-gradient-to-br from-blue-900 to-slate-900 p-6 rounded-2xl border border-blue-700/30 shadow-xl">
+        <h2 className="text-2xl font-bold mb-4 text-blue-300 flex items-center">
+          <Activity className="mr-2" /> 形成原理
+        </h2>
+        <p className="text-lg leading-relaxed text-slate-300 mb-6">
+          下降流（Downcurrent）通常發生在海底峭壁、岬角或兩股海流交匯處。當水平流動的海流撞擊到峭壁後，水流方向被迫改變，一部分向上，一部分則<span className="text-red-400 font-bold">劇烈向下</span>。這股向下的力量可能極強，將潛水員迅速帶往更深的深度。
+        </p>
+        
+        {/* Visual Simulation */}
+        <div className="relative h-64 bg-blue-950 rounded-xl overflow-hidden border border-blue-800">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+          
+          {/* Wall */}
+          <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-slate-800 flex items-center justify-center border-l border-slate-700">
+            <span className="text-slate-500 font-bold rotate-90 text-xl tracking-widest">海底峭壁 (WALL)</span>
+          </div>
 
-            outboundContainer.innerHTML = ''; 
-            flightData.outbound.forEach(flight => {
-                outboundContainer.innerHTML += createFlightCard(flight);
-            });
+          {/* Arrows Animation Container */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Horizontal Flow */}
+            <div className="absolute top-1/2 left-0 w-1/2 h-1 bg-blue-400/30"></div>
+            <div className="absolute top-1/3 left-10 flex space-x-1 animate-pulse">
+               <ArrowRight className="text-blue-400 w-8 h-8" />
+               <ArrowRight className="text-blue-400 w-8 h-8 opacity-75" />
+               <ArrowRight className="text-blue-400 w-8 h-8 opacity-50" />
+            </div>
+            <div className="absolute top-1/3 left-1/2 text-blue-200 font-bold text-sm bg-blue-900/80 px-2 py-1 rounded">強勁洋流</div>
 
-            returnContainer.innerHTML = ''; 
-            flightData.return.forEach(flight => {
-                returnContainer.innerHTML += createFlightCard(flight);
-            });
+            {/* Downward Flow */}
+            <div className="absolute top-1/2 right-[34%] flex flex-col space-y-1 animate-bounce duration-[2000ms]">
+               <ArrowDown className="text-red-500 w-10 h-10 drop-shadow-lg" />
+               <ArrowDown className="text-red-500 w-10 h-10 opacity-75" />
+            </div>
+            <div className="absolute top-2/3 right-[36%] text-red-300 font-bold text-sm bg-red-900/80 px-2 py-1 rounded">下降流</div>
+            
+            {/* Diver Icon */}
+            <div className="absolute top-1/2 right-[45%] text-yellow-400 transition-all duration-1000 hover:translate-y-10 cursor-pointer group">
+               <LifeBuoy className="w-8 h-8 animate-spin-slow" />
+               <div className="opacity-0 group-hover:opacity-100 absolute -bottom-8 left-0 w-32 text-xs bg-black p-1 rounded">潛水員被帶離深度</div>
+            </div>
+          </div>
+        </div>
+        <p className="text-sm text-center text-slate-400 mt-3">
+          示意圖：洋流撞擊峭壁後，轉向下方形成強勁拉力。
+        </p>
+      </div>
 
-            notesList.innerHTML = ''; 
-            flightData.importantNotes.forEach(note => {
-                const li = document.createElement('li');
-                li.textContent = note;
-                notesList.appendChild(li);
-            });
+      <div className="grid md:grid-cols-2 gap-4">
+        <InfoCard 
+          title="發生地點" 
+          content="常見於斷層邊緣（Drop-off）、海岬尖端（Corner）、兩島之間的通道。這些地方地形變化大，水流複雜。"
+          icon={<Anchor className="text-emerald-400" />}
+        />
+        <InfoCard 
+          title="危險性" 
+          content="除了快速掉深導致耳壓平衡不及或氮醉，最危險的是耗盡氣源與心理恐慌，甚至被帶超過休閒潛水極限深度。"
+          icon={<AlertTriangle className="text-red-400" />}
+        />
+      </div>
+    </div>
+  );
+};
 
-            const tabOutbound = document.getElementById('tab-outbound');
-            const tabReturn = document.getElementById('tab-return');
-            const contentOutbound = document.getElementById('content-outbound');
-            const contentReturn = document.getElementById('content-return');
+const SignsSection = () => {
+  const signs = [
+    {
+      title: "氣泡向下跑",
+      desc: "這是最明顯的訊號。正常氣泡應垂直上升，若你吐出的氣泡在他處下沉，或在你周圍亂竄甚至往下跑，代表你正處於下降流中。",
+      icon: <Wind className="text-blue-300" />,
+      color: "bg-blue-900/40"
+    },
+    {
+      title: "魚群游姿異常",
+      desc: "觀察周圍的小魚。如果牠們拼命拍動尾鰭卻沒有前進，或者頭朝下呈現垂直游動的姿勢，代表水流極強。",
+      icon: <Activity className="text-yellow-300" />,
+      color: "bg-yellow-900/20"
+    },
+    {
+      title: "海扇與軟珊瑚狀態",
+      desc: "生長在峭壁上的海扇如果被強烈地壓向下方，或者軟珊瑚呈現被壓扁的狀態，都是強烈水流的視覺證據。",
+      icon: <Waves className="text-emerald-300" />,
+      color: "bg-emerald-900/20"
+    },
+    {
+      title: "電腦錶深度驟變",
+      desc: "你沒有洩氣，BCD也沒有破，但電腦錶顯示深度在幾秒內快速增加（例如從15米突然變成20米）。",
+      icon: <AlertTriangle className="text-red-300" />,
+      color: "bg-red-900/20"
+    }
+  ];
 
-            tabOutbound.addEventListener('click', () => {
-                contentOutbound.classList.remove('hidden');
-                contentReturn.classList.add('hidden');
-                tabOutbound.classList.replace('tab-inactive', 'tab-active');
-                tabReturn.classList.replace('tab-active', 'tab-inactive');
-            });
+  return (
+    <div className="space-y-6 animate-fade-in">
+      <h2 className="text-2xl font-bold text-white mb-4">如何識別？觀察這 4 個跡象</h2>
+      <div className="grid gap-4">
+        {signs.map((sign, idx) => (
+          <div key={idx} className={`${sign.color} p-5 rounded-xl border border-white/5 flex items-start space-x-4 hover:border-white/20 transition-colors`}>
+            <div className="bg-black/30 p-3 rounded-lg shrink-0">
+              {sign.icon}
+            </div>
+            <div>
+              <h3 className="font-bold text-lg text-slate-100">{sign.title}</h3>
+              <p className="text-slate-300 mt-1 text-sm leading-relaxed">{sign.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-            tabReturn.addEventListener('click', () => {
-                contentReturn.classList.remove('hidden');
-                contentOutbound.classList.add('hidden');
-                tabReturn.classList.replace('tab-inactive', 'tab-active');
-                tabOutbound.classList.replace('tab-active', 'tab-inactive');
-            });
+const ActionSection = () => {
+  const [step, setStep] = useState(0);
+  
+  const steps = [
+    {
+      title: "1. 保持冷靜 (Stay Calm)",
+      content: "這是最重要的一步。恐慌會導致過度換氣和做出錯誤判斷。確認你的二級頭咬緊，面鏡戴好。",
+      action: "深呼吸，停止無效的踢動，評估狀況。",
+      color: "border-blue-500"
+    },
+    {
+      title: "2. 遠離峭壁 (Swim Away)",
+      content: "不要試圖「往上」游對抗下降流（通常贏不了）。下降流通常緊貼著峭壁。",
+      action: "身體保持水平，全力向「外」（遠離牆壁的方向）踢動，游出下降流的影響範圍。",
+      color: "border-yellow-500"
+    },
+    {
+      title: "3. 適度充氣 (Inflate BCD)",
+      content: "如果在快速下墜，可以點放充氣鈕建立正浮力。但要非常小心！",
+      action: "一旦脫離下降流，立刻準備洩氣，避免失控上升（火箭式上升）。",
+      color: "border-orange-500"
+    },
+    {
+      title: "4. 尋找掩護或攀爬 (Shelter/Climb)",
+      content: "如果無法游開且被壓向峭壁，尋找岩石凹陷處躲避。",
+      action: "必要時抓住死珊瑚或岩石（戴手套），像攀岩一樣往上或橫向移動。",
+      color: "border-emerald-500"
+    },
+    {
+      title: "5. 最後手段：拋棄配重",
+      content: "如果你已經掉到極限深度且無法停止下墜，這是最後保命手段。",
+      action: "拋棄配重帶。注意：這會導致隨後的急速上升，必須準備好身體呈大字型減速並不斷洩氣。",
+      color: "border-red-600"
+    }
+  ];
 
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-        });
-    </script>
-</body>
-</html>
+  return (
+    <div className="animate-fade-in">
+      <h2 className="text-2xl font-bold text-white mb-6">緊急應對程序 (S.O.P.)</h2>
+      
+      {/* Interactive Steps */}
+      <div className="bg-slate-800 rounded-2xl p-1 shadow-inner mb-6">
+        <div className="flex space-x-1 overflow-x-auto no-scrollbar p-1">
+          {steps.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setStep(idx)}
+              className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${
+                step === idx ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+              }`}
+            >
+              步驟 {idx + 1}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className={`bg-slate-900 border-l-4 ${steps[step].color} p-8 rounded-r-xl shadow-2xl min-h-[250px] flex flex-col justify-center transition-all duration-300`}>
+        <h3 className="text-2xl font-bold mb-4 flex items-center text-white">
+          {steps[step].title}
+        </h3>
+        <p className="text-lg text-slate-300 mb-6">
+          {steps[step].content}
+        </p>
+        <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+          <span className="text-blue-400 font-bold uppercase text-xs tracking-wider block mb-2">Action Item</span>
+          <p className="text-white font-medium">{steps[step].action}</p>
+        </div>
+      </div>
+
+      <div className="flex justify-between mt-6">
+        <button 
+          disabled={step === 0}
+          onClick={() => setStep(s => s - 1)}
+          className="px-6 py-2 rounded-full bg-slate-700 text-white disabled:opacity-30 hover:bg-slate-600 transition"
+        >
+          上一步
+        </button>
+        <button 
+          disabled={step === steps.length - 1}
+          onClick={() => setStep(s => s + 1)}
+          className="px-6 py-2 rounded-full bg-blue-600 text-white disabled:opacity-30 hover:bg-blue-500 transition"
+        >
+          下一步
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const PreventionSection = () => {
+  return (
+    <div className="space-y-6 animate-fade-in">
+      <div className="bg-gradient-to-r from-emerald-900/40 to-slate-900 p-6 rounded-2xl border border-emerald-800/30">
+        <h2 className="text-2xl font-bold text-emerald-400 mb-4">預防勝於治療</h2>
+        <ul className="space-y-4">
+          <PreventionItem 
+            title="仔細聆聽導潛簡報 (Briefing)" 
+            desc="當地導潛最清楚哪裡會有下降流。如果提到「洗衣機流」或「強流」，請提高警覺。" 
+          />
+          <PreventionItem 
+            title="保持適當距離" 
+            desc="在峭壁潛水時，不要貼得太近，保持幾米的距離可以讓你有更多反應時間，也不容易直接被捲入。" 
+          />
+          <PreventionItem 
+            title="觀察前導潛水員" 
+            desc="注意導潛的氣泡。如果導潛的氣泡突然亂跑，不要跟隨進入該區域，立刻繞道。" 
+          />
+          <PreventionItem 
+            title="殘壓管理" 
+            desc="在強流區耗氣量會大增。保留更多的氣瓶餘量以應對突發狀況。" 
+          />
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+const PreventionItem = ({ title, desc }) => (
+  <li className="flex items-start space-x-3">
+    <div className="mt-1 bg-emerald-500/20 p-1 rounded-full">
+      <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+    </div>
+    <div>
+      <strong className="text-emerald-100 block text-lg">{title}</strong>
+      <span className="text-slate-400 text-sm">{desc}</span>
+    </div>
+  </li>
+);
+
+const InfoCard = ({ title, content, icon }) => (
+  <div className="bg-slate-800/50 p-5 rounded-xl border border-slate-700/50 hover:border-slate-600 transition-colors">
+    <div className="flex items-center space-x-3 mb-3">
+      <div className="p-2 bg-slate-900 rounded-lg">{icon}</div>
+      <h3 className="font-bold text-lg text-slate-200">{title}</h3>
+    </div>
+    <p className="text-slate-400 text-sm leading-relaxed">{content}</p>
+  </div>
+);
+
+export default DowncurrentApp;
