@@ -1,331 +1,324 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Waves, 
-  ArrowDown, 
-  ArrowRight, 
-  AlertTriangle, 
-  LifeBuoy, 
-  Wind, 
-  Eye, 
-  Activity,
-  Anchor,
-  Info
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北越雙龍灣、印度支那號五日遊 - 行程表</title>
+    <style>
+        :root {
+            --primary-color: #005f73; /* 深海藍，呼應下龍灣 */
+            --accent-color: #ae2012; /* 越南紅 */
+            --bg-color: #fdfbf7;
+            --text-color: #333;
+            --light-gray: #e9ecef;
+        }
 
-const DowncurrentApp = () => {
-  const [activeTab, setActiveTab] = useState('intro');
-  
-  return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-blue-500 selection:text-white">
-      {/* Header */}
-      <header className="bg-blue-900/50 backdrop-blur-md border-b border-blue-700/30 sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="bg-blue-500 p-2 rounded-lg">
-              <Waves className="w-6 h-6 text-white" />
-            </div>
-            <h1 className="text-xl font-bold tracking-wider">潛水安全指南：下降流</h1>
-          </div>
-        </div>
-      </header>
+        body {
+            font-family: "Microsoft JhengHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
 
-      {/* Navigation */}
-      <div className="bg-slate-800/50 border-b border-slate-700">
-        <div className="max-w-4xl mx-auto px-4">
-          <nav className="flex space-x-1 overflow-x-auto no-scrollbar py-2">
-            <NavButton id="intro" label="什麼是下降流" icon={<Info size={18} />} active={activeTab} onClick={setActiveTab} />
-            <NavButton id="signs" label="如何識別" icon={<Eye size={18} />} active={activeTab} onClick={setActiveTab} />
-            <NavButton id="action" label="緊急應對" icon={<LifeBuoy size={18} />} active={activeTab} onClick={setActiveTab} />
-            <NavButton id="prevention" label="預防觀念" icon={<Anchor size={18} />} active={activeTab} onClick={setActiveTab} />
-          </nav>
-        </div>
-      </div>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8 pb-20">
-        {activeTab === 'intro' && <IntroSection />}
-        {activeTab === 'signs' && <SignsSection />}
-        {activeTab === 'action' && <ActionSection />}
-        {activeTab === 'prevention' && <PreventionSection />}
-      </main>
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #0a9396);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
 
-      {/* Footer */}
-      <footer className="bg-slate-950 py-8 text-center text-slate-500 text-sm border-t border-slate-800 mt-auto">
-        <p>© 2025 潛水安全教育資料 | 請始終遵守保守潛水原則</p>
-        <p className="mt-2 text-xs">免責聲明：本資訊僅供參考，實際潛水請依照當地導潛指示及自身訓練水平進行。</p>
-      </footer>
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        .info-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .flight-table, .hotel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: white;
+        }
+
+        .flight-table th, .flight-table td, 
+        .hotel-table th, .hotel-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .flight-table th {
+            background-color: var(--light-gray);
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .day-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-content {
+            padding: 20px;
+        }
+
+        .highlight-badge {
+            background-color: #e9d8a6;
+            color: #9b2226;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .meal-hotel-info {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            font-size: 0.9rem;
+        }
+
+        .meal-icon, .hotel-icon {
+            margin-right: 5px;
+        }
+
+        .important-list li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #777;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
+            .day-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🇻🇳 北越雙龍灣、印度支那號、神話洞穴五日遊</h1>
+    [cite_start]<p style="text-align: center; margin-top: 10px; opacity: 0.9;">出發日期：2025年11月26日 [cite: 2]</p>
+</header>
+
+<div class="container">
+
+    <div class="info-box">
+        <h3 style="margin-top: 0; color: var(--accent-color);">🚩 集合資訊</h3>
+        [cite_start]<p><strong>集合時間：</strong>2025/11/26 (三) 上午 05:00 [cite: 4]</p>
+        [cite_start]<p><strong>集合地點：</strong>桃園國際機場 第二航廈 越南航空團體櫃台 [cite: 4]</p>
+        [cite_start]<p><strong>送機人員：</strong>林武助 先生 (0910-127-490) [cite: 5, 6]</p>
+        [cite_start]<p><strong>領隊：</strong>賴如玲 小姐 (0928-041-858) [cite: 9, 10]</p>
+        [cite_start]<p><strong>識別牌：</strong>紅色 [cite: 3]</p>
     </div>
-  );
-};
 
-/* --- Components --- */
+    <h2>✈️ 航班資訊</h2>
+    <table class="flight-table">
+        <thead>
+            <tr>
+                <th>日期</th>
+                <th>起降地</th>
+                <th>航班</th>
+                <th>時間</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>11/26</td>
+                <td>桃園 - 河內</td>
+                <td>VN 579</td>
+                [cite_start]<td>07:35 起飛 / 09:50 抵達 [cite: 13]</td>
+            </tr>
+            <tr>
+                <td>11/30</td>
+                <td>河內 - 桃園</td>
+                <td>VN 578</td>
+                [cite_start]<td>17:35 起飛 / 21:05 抵達 [cite: 13]</td>
+            </tr>
+        </tbody>
+    </table>
 
-const NavButton = ({ id, label, icon, active, onClick }) => (
-  <button
-    onClick={() => onClick(id)}
-    className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-all duration-200 whitespace-nowrap ${
-      active === id 
-        ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' 
-        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-    }`}
-  >
-    {icon}
-    <span>{label}</span>
-  </button>
-);
+    <h2>🗓️ 每日行程</h2>
 
-const IntroSection = () => {
-  return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="bg-gradient-to-br from-blue-900 to-slate-900 p-6 rounded-2xl border border-blue-700/30 shadow-xl">
-        <h2 className="text-2xl font-bold mb-4 text-blue-300 flex items-center">
-          <Activity className="mr-2" /> 形成原理
-        </h2>
-        <p className="text-lg leading-relaxed text-slate-300 mb-6">
-          下降流（Downcurrent）通常發生在海底峭壁、岬角或兩股海流交匯處。當水平流動的海流撞擊到峭壁後，水流方向被迫改變，一部分向上，一部分則<span className="text-red-400 font-bold">劇烈向下</span>。這股向下的力量可能極強，將潛水員迅速帶往更深的深度。
-        </p>
-        
-        {/* Visual Simulation */}
-        <div className="relative h-64 bg-blue-950 rounded-xl overflow-hidden border border-blue-800">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-          
-          {/* Wall */}
-          <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-slate-800 flex items-center justify-center border-l border-slate-700">
-            <span className="text-slate-500 font-bold rotate-90 text-xl tracking-widest">海底峭壁 (WALL)</span>
-          </div>
-
-          {/* Arrows Animation Container */}
-          <div className="absolute inset-0 pointer-events-none">
-            {/* Horizontal Flow */}
-            <div className="absolute top-1/2 left-0 w-1/2 h-1 bg-blue-400/30"></div>
-            <div className="absolute top-1/3 left-10 flex space-x-1 animate-pulse">
-               <ArrowRight className="text-blue-400 w-8 h-8" />
-               <ArrowRight className="text-blue-400 w-8 h-8 opacity-75" />
-               <ArrowRight className="text-blue-400 w-8 h-8 opacity-50" />
-            </div>
-            <div className="absolute top-1/3 left-1/2 text-blue-200 font-bold text-sm bg-blue-900/80 px-2 py-1 rounded">強勁洋流</div>
-
-            {/* Downward Flow */}
-            <div className="absolute top-1/2 right-[34%] flex flex-col space-y-1 animate-bounce duration-[2000ms]">
-               <ArrowDown className="text-red-500 w-10 h-10 drop-shadow-lg" />
-               <ArrowDown className="text-red-500 w-10 h-10 opacity-75" />
-            </div>
-            <div className="absolute top-2/3 right-[36%] text-red-300 font-bold text-sm bg-red-900/80 px-2 py-1 rounded">下降流</div>
-            
-            {/* Diver Icon */}
-            <div className="absolute top-1/2 right-[45%] text-yellow-400 transition-all duration-1000 hover:translate-y-10 cursor-pointer group">
-               <LifeBuoy className="w-8 h-8 animate-spin-slow" />
-               <div className="opacity-0 group-hover:opacity-100 absolute -bottom-8 left-0 w-32 text-xs bg-black p-1 rounded">潛水員被帶離深度</div>
-            </div>
-          </div>
+    <div class="day-card">
+        <div class="day-header">
+            <span>第一天 (11/26)</span>
+            <span style="font-size: 0.9em;">桃園 ➔ 河內 ➔ 下龍灣</span>
         </div>
-        <p className="text-sm text-center text-slate-400 mt-3">
-          示意圖：洋流撞擊峭壁後，轉向下方形成強勁拉力。
-        </p>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-4">
-        <InfoCard 
-          title="發生地點" 
-          content="常見於斷層邊緣（Drop-off）、海岬尖端（Corner）、兩島之間的通道。這些地方地形變化大，水流複雜。"
-          icon={<Anchor className="text-emerald-400" />}
-        />
-        <InfoCard 
-          title="危險性" 
-          content="除了快速掉深導致耳壓平衡不及或氮醉，最危險的是耗盡氣源與心理恐慌，甚至被帶超過休閒潛水極限深度。"
-          icon={<AlertTriangle className="text-red-400" />}
-        />
-      </div>
-    </div>
-  );
-};
-
-const SignsSection = () => {
-  const signs = [
-    {
-      title: "氣泡向下跑",
-      desc: "這是最明顯的訊號。正常氣泡應垂直上升，若你吐出的氣泡在他處下沉，或在你周圍亂竄甚至往下跑，代表你正處於下降流中。",
-      icon: <Wind className="text-blue-300" />,
-      color: "bg-blue-900/40"
-    },
-    {
-      title: "魚群游姿異常",
-      desc: "觀察周圍的小魚。如果牠們拼命拍動尾鰭卻沒有前進，或者頭朝下呈現垂直游動的姿勢，代表水流極強。",
-      icon: <Activity className="text-yellow-300" />,
-      color: "bg-yellow-900/20"
-    },
-    {
-      title: "海扇與軟珊瑚狀態",
-      desc: "生長在峭壁上的海扇如果被強烈地壓向下方，或者軟珊瑚呈現被壓扁的狀態，都是強烈水流的視覺證據。",
-      icon: <Waves className="text-emerald-300" />,
-      color: "bg-emerald-900/20"
-    },
-    {
-      title: "電腦錶深度驟變",
-      desc: "你沒有洩氣，BCD也沒有破，但電腦錶顯示深度在幾秒內快速增加（例如從15米突然變成20米）。",
-      icon: <AlertTriangle className="text-red-300" />,
-      color: "bg-red-900/20"
-    }
-  ];
-
-  return (
-    <div className="space-y-6 animate-fade-in">
-      <h2 className="text-2xl font-bold text-white mb-4">如何識別？觀察這 4 個跡象</h2>
-      <div className="grid gap-4">
-        {signs.map((sign, idx) => (
-          <div key={idx} className={`${sign.color} p-5 rounded-xl border border-white/5 flex items-start space-x-4 hover:border-white/20 transition-colors`}>
-            <div className="bg-black/30 p-3 rounded-lg shrink-0">
-              {sign.icon}
+        <div class="day-content">
+            <p><strong>今日焦點：</strong>越南民族博物館、女皇雙層纜車、摩天輪</p>
+            <ul>
+                [cite_start]<li>抵達河內，前往【越南民族博物館】：了解53個少數民族文化縮影 [cite: 107]。</li>
+                <li>前往下龍市。</li>
+                [cite_start]<li>搭乘【女皇雙層景觀纜車】：金氏世界紀錄最大露天纜車 [cite: 115]。</li>
+                [cite_start]<li>參觀【日本花園】、【浪漫錦鯉橋】(IG打卡熱點) [cite: 120]。</li>
+                [cite_start]<li>搭乘【太陽之眼摩天輪】：欣賞下龍灣高空美景 [cite: 117]。</li>
+                [cite_start]<li>特別贈送：越式腳底按摩或全身按摩90分鐘 (12歲以下不贈送) [cite: 107, 84]。</li>
+            </ul>
+            <div class="meal-hotel-info">
+                [cite_start]<p>🍽️ <strong>早餐：</strong>機上簡餐 ｜ <strong>午餐：</strong>地中海風西式套餐 (牛/魚/豬3選1) ｜ <strong>晚餐：</strong>龍騰碧珠洞晚宴 (雙主菜+半隻龍蝦) [cite: 123-126]</p>
+                [cite_start]<p>🏨 <strong>住宿：</strong>下龍灣麗笙藍酒店 Radisson Blu Hotel [cite: 127]</p>
             </div>
-            <div>
-              <h3 className="font-bold text-lg text-slate-100">{sign.title}</h3>
-              <p className="text-slate-300 mt-1 text-sm leading-relaxed">{sign.desc}</p>
+        </div>
+    </div>
+
+    <div class="day-card">
+        <div class="day-header">
+            <span>第二天 (11/27)</span>
+            <span style="font-size: 0.9em;">下龍灣 ➔ 印度支那號 (宿船上)</span>
+        </div>
+        <div class="day-content">
+            <p><span class="highlight-badge">亮點</span> 入住頂級五星海上Villa</p>
+            <ul>
+                [cite_start]<li>中午：抵達碼頭，登上五星級【印度支那號 (Indochine Premium Cruise)】[cite: 138]。</li>
+                <li>享用遊輪自助午餐，航行於蘭夏灣與拜子龍灣。</li>
+                <li>下午行程 (依船公司安排)：
+                    <ul>
+                        [cite_start]<li>探訪【驚訝洞 (Surprise Cave)】或迷宮洞：欣賞鐘乳石奇景 [cite: 138]。</li>
+                        [cite_start]<li>搭乘小舢舨或獨木舟探索天井洞/007電影拍攝地 [cite: 138]。</li>
+                        [cite_start]<li>船上活動：越式春捲手作教學 [cite: 138]。</li>
+                    </ul>
+                </li>
+                [cite_start]<li>晚上：燭光晚餐、夜釣墨魚、甲板觀星 [cite: 140]。</li>
+            </ul>
+            <div class="meal-hotel-info">
+                [cite_start]<p>🍽️ <strong>早餐：</strong>飯店內 ｜ <strong>午餐：</strong>船上亞洲自助餐 ｜ <strong>晚餐：</strong>船上燭光聽潮晚宴 (每人一隻龍蝦) [cite: 134-136]</p>
+                [cite_start]<p>🏨 <strong>住宿：</strong>Indochine Premium Cruise (露臺海景房) [cite: 136]</p>
+                [cite_start]<p>⚠️ <em>註：需準備船上小費約 USD 10 (或等值越盾) 於隔日下船前支付 [cite: 146]。</em></p>
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const ActionSection = () => {
-  const [step, setStep] = useState(0);
-  
-  const steps = [
-    {
-      title: "1. 保持冷靜 (Stay Calm)",
-      content: "這是最重要的一步。恐慌會導致過度換氣和做出錯誤判斷。確認你的二級頭咬緊，面鏡戴好。",
-      action: "深呼吸，停止無效的踢動，評估狀況。",
-      color: "border-blue-500"
-    },
-    {
-      title: "2. 遠離峭壁 (Swim Away)",
-      content: "不要試圖「往上」游對抗下降流（通常贏不了）。下降流通常緊貼著峭壁。",
-      action: "身體保持水平，全力向「外」（遠離牆壁的方向）踢動，游出下降流的影響範圍。",
-      color: "border-yellow-500"
-    },
-    {
-      title: "3. 適度充氣 (Inflate BCD)",
-      content: "如果在快速下墜，可以點放充氣鈕建立正浮力。但要非常小心！",
-      action: "一旦脫離下降流，立刻準備洩氣，避免失控上升（火箭式上升）。",
-      color: "border-orange-500"
-    },
-    {
-      title: "4. 尋找掩護或攀爬 (Shelter/Climb)",
-      content: "如果無法游開且被壓向峭壁，尋找岩石凹陷處躲避。",
-      action: "必要時抓住死珊瑚或岩石（戴手套），像攀岩一樣往上或橫向移動。",
-      color: "border-emerald-500"
-    },
-    {
-      title: "5. 最後手段：拋棄配重",
-      content: "如果你已經掉到極限深度且無法停止下墜，這是最後保命手段。",
-      action: "拋棄配重帶。注意：這會導致隨後的急速上升，必須準備好身體呈大字型減速並不斷洩氣。",
-      color: "border-red-600"
-    }
-  ];
-
-  return (
-    <div className="animate-fade-in">
-      <h2 className="text-2xl font-bold text-white mb-6">緊急應對程序 (S.O.P.)</h2>
-      
-      {/* Interactive Steps */}
-      <div className="bg-slate-800 rounded-2xl p-1 shadow-inner mb-6">
-        <div className="flex space-x-1 overflow-x-auto no-scrollbar p-1">
-          {steps.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setStep(idx)}
-              className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${
-                step === idx ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
-              }`}
-            >
-              步驟 {idx + 1}
-            </button>
-          ))}
         </div>
-      </div>
-
-      <div className={`bg-slate-900 border-l-4 ${steps[step].color} p-8 rounded-r-xl shadow-2xl min-h-[250px] flex flex-col justify-center transition-all duration-300`}>
-        <h3 className="text-2xl font-bold mb-4 flex items-center text-white">
-          {steps[step].title}
-        </h3>
-        <p className="text-lg text-slate-300 mb-6">
-          {steps[step].content}
-        </p>
-        <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-          <span className="text-blue-400 font-bold uppercase text-xs tracking-wider block mb-2">Action Item</span>
-          <p className="text-white font-medium">{steps[step].action}</p>
-        </div>
-      </div>
-
-      <div className="flex justify-between mt-6">
-        <button 
-          disabled={step === 0}
-          onClick={() => setStep(s => s - 1)}
-          className="px-6 py-2 rounded-full bg-slate-700 text-white disabled:opacity-30 hover:bg-slate-600 transition"
-        >
-          上一步
-        </button>
-        <button 
-          disabled={step === steps.length - 1}
-          onClick={() => setStep(s => s + 1)}
-          className="px-6 py-2 rounded-full bg-blue-600 text-white disabled:opacity-30 hover:bg-blue-500 transition"
-        >
-          下一步
-        </button>
-      </div>
     </div>
-  );
-};
 
-const PreventionSection = () => {
-  return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="bg-gradient-to-r from-emerald-900/40 to-slate-900 p-6 rounded-2xl border border-emerald-800/30">
-        <h2 className="text-2xl font-bold text-emerald-400 mb-4">預防勝於治療</h2>
-        <ul className="space-y-4">
-          <PreventionItem 
-            title="仔細聆聽導潛簡報 (Briefing)" 
-            desc="當地導潛最清楚哪裡會有下降流。如果提到「洗衣機流」或「強流」，請提高警覺。" 
-          />
-          <PreventionItem 
-            title="保持適當距離" 
-            desc="在峭壁潛水時，不要貼得太近，保持幾米的距離可以讓你有更多反應時間，也不容易直接被捲入。" 
-          />
-          <PreventionItem 
-            title="觀察前導潛水員" 
-            desc="注意導潛的氣泡。如果導潛的氣泡突然亂跑，不要跟隨進入該區域，立刻繞道。" 
-          />
-          <PreventionItem 
-            title="殘壓管理" 
-            desc="在強流區耗氣量會大增。保留更多的氣瓶餘量以應對突發狀況。" 
-          />
+    <div class="day-card">
+        <div class="day-header">
+            <span>第三天 (11/28)</span>
+            <span style="font-size: 0.9em;">下龍灣 ➔ 河內市區觀光</span>
+        </div>
+        <div class="day-content">
+            <p><strong>今日焦點：</strong>太極晨喚、英雄島、三十六古街</p>
+            <ul>
+                [cite_start]<li>06:30 早安太極課程 [cite: 150]。</li>
+                [cite_start]<li>前往【英雄島 (Titop Island)】：登高411階俯瞰下龍灣全景 [cite: 150]。</li>
+                [cite_start]<li>09:30 返航並享用早午餐，約11:00離船 [cite: 150]。</li>
+                <li>返回河內。</li>
+                [cite_start]<li>遊覽【還劍湖】及【三十六古街】(含電瓶車) [cite: 156]。</li>
+                [cite_start]<li>漫步【懷舊法國區】：聖約瑟夫大教堂、百年歌劇院外觀 [cite: 159]。</li>
+            </ul>
+            <div class="meal-hotel-info">
+                [cite_start]<p>🍽️ <strong>早餐：</strong>船上樂活早午餐 ｜ <strong>午餐：</strong>越式九層蒸鮮塔 ｜ <strong>晚餐：</strong>越法融合創意料理+龍蝦吃到飽 [cite: 160-162]</p>
+                [cite_start]<p>🏨 <strong>住宿：</strong>格蘭美爵酒店 Grand Mercure Hanoi [cite: 162]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="day-card">
+        <div class="day-header">
+            <span>第四天 (11/29)</span>
+            <span style="font-size: 0.9em;">河內 ➔ 寧平 (陸龍灣) ➔ 河內</span>
+        </div>
+        <div class="day-content">
+            <p><strong>今日焦點：</strong>長安湖輕舟探祕、碧洞古剎</p>
+            <ul>
+                [cite_start]<li>前往寧平【長安湖生態保護區】(陸龍灣) [cite: 166]。</li>
+                [cite_start]<li>搭乘小鐵皮舟 (4人一艘) 穿梭石灰岩洞穴與山巒之間 [cite: 168]。</li>
+                [cite_start]<li>參觀【三谷古剎~碧洞寺】：分為上中下三層的古廟，有「南天第二洞」之稱 [cite: 172]。</li>
+                <li>返回河內。</li>
+            </ul>
+            <div class="meal-hotel-info">
+                [cite_start]<p>🍽️ <strong>早餐：</strong>飯店內 ｜ <strong>午餐：</strong>寧平道地農家料理 ｜ <strong>晚餐：</strong>飯店內海陸豪華自助晚餐 (加贈龍蝦半隻) [cite: 176-178]</p>
+                [cite_start]<p>🏨 <strong>住宿：</strong>格蘭美爵酒店 Grand Mercure Hanoi [cite: 179]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="day-card">
+        <div class="day-header">
+            <span>第五天 (11/30)</span>
+            <span style="font-size: 0.9em;">河內 ➔ 桃園</span>
+        </div>
+        <div class="day-content">
+            <p><strong>今日焦點：</strong>鎮國寺、返家</p>
+            <ul>
+                <li>飯店自由活動，享受設施。</li>
+                [cite_start]<li>參觀【鎮國寺】：河內最古老寺廟，西湖邊的佛教聖地 [cite: 182]。</li>
+                <li>午餐後前往機場，搭機返回溫暖的家。</li>
+            </ul>
+            <div class="meal-hotel-info">
+                [cite_start]<p>🍽️ <strong>早餐：</strong>飯店內 ｜ <strong>午餐：</strong>Maison Sen Buffet 美森豪華自助餐 [cite: 185-186]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-box" style="border-left-color: #ffb703;">
+        <h3>⚠️ 旅遊注意事項</h3>
+        <ul class="important-list">
+            [cite_start]<li><strong>托運行李：</strong>每人一件23公斤 + 手提7公斤 [cite: 17]。</li>
+            <li><strong>小費提醒：</strong>
+                <ul>
+                    [cite_start]<li>導遊/司機/領隊服務費：每人每天 NT$300 × 5天 = <strong>NT$1,500</strong> [cite: 247]。</li>
+                    [cite_start]<li>遊船小費：約 <strong>US$10</strong> (或等值越盾) [cite: 146]。</li>
+                    [cite_start]<li>陸龍灣船家小費：每人 20,000 越盾 [cite: 258]。</li>
+                    [cite_start]<li>行李/床頭小費：約 10,000-20,000 越盾 [cite: 256, 257]。</li>
+                </ul>
+            </li>
+            [cite_start]<li><strong>電壓：</strong>220V (雙圓孔插座，大部分飯店有萬用插座，但建議攜帶轉換頭/變壓器) [cite: 199]。</li>
+            [cite_start]<li><strong>環保政策：</strong>下龍灣禁止攜帶塑膠水瓶，建議自備水壺 [cite: 18]。</li>
+            [cite_start]<li><strong>時差：</strong>比台灣慢1小時 [cite: 201]。</li>
+            [cite_start]<li><strong>網路：</strong>行程有贈送網卡 (每日4G流量) [cite: 103]。</li>
         </ul>
-      </div>
     </div>
-  );
-};
 
-const PreventionItem = ({ title, desc }) => (
-  <li className="flex items-start space-x-3">
-    <div className="mt-1 bg-emerald-500/20 p-1 rounded-full">
-      <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
-    </div>
-    <div>
-      <strong className="text-emerald-100 block text-lg">{title}</strong>
-      <span className="text-slate-400 text-sm">{desc}</span>
-    </div>
-  </li>
-);
+</div>
 
-const InfoCard = ({ title, content, icon }) => (
-  <div className="bg-slate-800/50 p-5 rounded-xl border border-slate-700/50 hover:border-slate-600 transition-colors">
-    <div className="flex items-center space-x-3 mb-3">
-      <div className="p-2 bg-slate-900 rounded-lg">{icon}</div>
-      <h3 className="font-bold text-lg text-slate-200">{title}</h3>
-    </div>
-    <p className="text-slate-400 text-sm leading-relaxed">{content}</p>
-  </div>
-);
+<footer>
+    <p>資料來源：HAN05VN5N26---__Indochina 5_ ____GM.pdf<br>
+    以上行程僅供參考，實際狀況依當地旅行社與船公司安排為準。</p>
+</footer>
 
-export default DowncurrentApp;
+</body>
+</html>
