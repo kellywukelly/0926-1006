@@ -24,7 +24,7 @@
 
   /* 整體基礎字級放大 */
   html {
-    font-size: 17px; /* 預設為 16px，稍微調大根字體，所有 rem 單位都會跟著放大 */
+    font-size: 17px; 
   }
 
   body {
@@ -36,7 +36,7 @@
     overflow-x: hidden;
   }
 
-  /* ── 地圖連結樣式 ── */
+  /* ── 連結樣式 ── */
   .map-link {
     color: var(--amber);
     text-decoration: none;
@@ -44,9 +44,16 @@
     padding-bottom: 1px;
     transition: opacity 0.2s ease;
   }
-  .map-link:active {
-    opacity: 0.5;
+  .map-link:active { opacity: 0.5; }
+
+  .ticket-link {
+    color: var(--ice);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(200,223,240,0.6);
+    padding-bottom: 1px;
+    transition: opacity 0.2s ease;
   }
+  .ticket-link:active { opacity: 0.5; }
 
   /* ── 開場 HERO 區塊 (含雪花動畫) ── */
   .hero {
@@ -59,11 +66,9 @@
     justify-content: center;
     text-align: center;
     overflow: hidden;
-    /* 深藍漸層背景 */
     background: linear-gradient(160deg, #0a1520 0%, #1a2e45 50%, #0d2235 100%);
   }
 
-  /* 漸層背景裝飾球 */
   .hero-bg-accent {
     position: absolute; inset: 0;
     background: 
@@ -71,7 +76,6 @@
       radial-gradient(ellipse 50% 50% at 20% 20%, rgba(200,223,240,0.05) 0%, transparent 60%);
   }
 
-  /* 雪花容器 */
   .snowflakes {
     position: absolute; inset: 0; pointer-events: none;
   }
@@ -83,7 +87,6 @@
     animation: fall linear infinite;
   }
 
-  /* 雪花飄落動畫 */
   @keyframes fall {
     0% { transform: translateY(-10px) translateX(0); opacity: 0; }
     10% { opacity: 1; }
@@ -113,10 +116,7 @@
     animation: fadeUp 1s 0.5s forwards;
   }
 
-  .hero-title span {
-    font-style: italic;
-    color: var(--ice);
-  }
+  .hero-title span { font-style: italic; color: var(--ice); }
 
   .hero-sub {
     font-family: 'Shippori Mincho', serif;
@@ -137,7 +137,6 @@
     opacity: 0;
     animation: fadeUp 1s 0.9s forwards;
   }
-
   .hero-meta span { color: var(--amber); }
 
   .scroll-hint {
@@ -265,13 +264,12 @@
 
   .item {
     display: flex; align-items: flex-start; gap: 0.8rem;
-    font-size: 1rem; /* 字體放大 */
+    font-size: 1rem;
     line-height: 1.6;
     color: rgba(245,247,250,0.9);
     margin-bottom: 0.6rem;
   }
   .item:last-child { margin-bottom: 0; }
-
   .item-icon { flex-shrink: 0; font-size: 1.1rem; margin-top: 0.1rem; }
 
   .tag {
@@ -279,7 +277,7 @@
     padding: 0.15rem 0.5rem;
     border-radius: 3px;
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem; /* 標籤字體放大 */
+    font-size: 0.75rem;
     letter-spacing: 0.05em;
     margin-left: 0.5rem;
     vertical-align: middle;
@@ -294,7 +292,7 @@
     border-left: 2px solid var(--orange);
     padding: 0.8rem 1rem;
     border-radius: 0 4px 4px 0;
-    font-size: 0.95rem; /* 備註字體放大 */
+    font-size: 0.95rem;
     color: rgba(245,247,250,0.85);
     line-height: 1.5;
   }
@@ -304,7 +302,7 @@
     width: 100%;
     border-collapse: collapse;
     font-family: 'DM Mono', monospace;
-    font-size: 0.9rem; /* 表格字體放大 */
+    font-size: 0.9rem;
     margin: 0.5rem 0;
   }
   .train-table th {
@@ -453,7 +451,7 @@
             <div class="day-section-label">航班去程</div>
             <div class="item">
               <span class="item-icon">✈️</span>
-              <span>星宇 JX802（我 & Kitty）｜ 10:10 TPE → 14:20 NRT</span>
+              <span>星宇 JX802（Kelly & Kitty）｜ 10:10 TPE → 14:20 NRT</span>
             </div>
           </div>
           <div class="day-section">
@@ -598,6 +596,7 @@
               <span class="item-icon">🚄</span>
               <span><strong>17:00 頃</strong>：歸還裝備，轉新幹線返東京</span>
             </div>
+            
             <table class="train-table">
               <thead>
                 <tr><th>車次</th><th>越後湯澤發</th><th>上野抵達</th><th>車程</th></tr>
@@ -694,17 +693,33 @@
         </div>
         <div class="day-body">
           <div class="day-section">
-            <div class="day-section-label">交通手段</div>
-            <div class="item">
+            <div class="day-section-label">前往機場交通手段</div>
+            <div class="item" style="margin-bottom: 0.2rem;">
+              <span class="item-icon">🎟️</span>
+              <span><a href="https://www.keisei.co.jp/keisei/tetudou/skyliner/e-ticket/zht/" target="_blank" class="ticket-link">Skyliner 官方線上購票連結</a></span>
+            </div>
+            <div class="item" style="margin-bottom: 0.8rem;">
               <span class="item-icon">🚄</span>
               <span><a href="https://maps.app.goo.gl/v4zyarcU2NV85bT9A" target="_blank" class="map-link">京成上野站</a> ➔ Skyliner（建議 <strong>11:00前</strong> 抵達成田機場）</span>
             </div>
+            
+            <table class="train-table">
+              <thead>
+                <tr><th>車次 (上野發)</th><th>抵達航廈 T2</th><th>抵達航廈 T1</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>09:15</td><td class="arr">10:01</td><td>10:04</td></tr>
+                <tr><td>09:40</td><td class="arr">10:21</td><td>10:24</td></tr>
+                <tr><td>09:55</td><td class="arr">10:41</td><td>10:44</td></tr>
+                <tr><td>10:20</td><td class="arr">11:01</td><td>11:04</td></tr>
+              </tbody>
+            </table>
           </div>
           <div class="day-section">
             <div class="day-section-label">航班回程</div>
             <div class="item">
               <span class="item-icon">🧑</span>
-              <span>我：星宇 JX801（13:45 → 16:45 TPE）</span>
+              <span>Kelly：星宇 JX801（13:45 → 16:45 TPE）</span>
             </div>
             <div class="item">
               <span class="item-icon">👩</span>
@@ -731,17 +746,24 @@
         <h3>✈️ 航班資訊</h3>
         <div class="flight-row">
           <div>
-            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.1rem;">去程 3/9</div>
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.1rem;">Kelly — 去程 3/9</div>
             <div class="flight-code">JX802</div>
           </div>
           <div class="flight-time">10:10 TPE → 14:20 NRT</div>
         </div>
         <div class="flight-row">
           <div>
-            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.1rem;">我 — 回程 3/14</div>
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.1rem;">Kelly — 回程 3/14</div>
             <div class="flight-code">JX801</div>
           </div>
           <div class="flight-time">13:45 NRT → 16:45 TPE</div>
+        </div>
+        <div class="flight-row">
+          <div>
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.1rem;">Kitty — 去程 3/9</div>
+            <div class="flight-code">JX802</div>
+          </div>
+          <div class="flight-time">10:10 TPE → 14:20 NRT</div>
         </div>
         <div class="flight-row">
           <div>
