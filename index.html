@@ -2,27 +2,30 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>石打丸山 & 東京滑雪行 ｜ 2026.03</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Shippori+Mincho:wght@400;600&family=DM+Mono:wght@300;400&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --snow: #f5f7fa;
-    --deep: #0d1b2a;
-    --navy: #1a2e45;
-    --slate: #2d4a6b;
-    --ice: #c8dff0;
-    --frost: #e8f2fb;
-    --orange: #e8753a;
-    --amber: #f4a846;
-    --red: #c0392b;
-    --green: #2e7d5e;
-    --gold: #c9a227;
-    --muted: #6b8299;
-    --border: rgba(200,223,240,0.35);
+    /* 冬日主題色票 */
+    --snow: #f5f7fa;        /* 純淨雪白 */
+    --deep: #0d1b2a;        /* 深邃冬夜 */
+    --navy: #1a2e45;        /* 墨藍 */
+    --slate: #2d4a6b;       /* 石板灰藍 */
+    --ice: #c8dff0;         /* 冰藍 */
+    --frost: #e8f2fb;       /* 霜白 */
+    --orange: #e8753a;      /* 暖陽橘 (強調色) */
+    --amber: #f4a846;       /* 琥珀金 (輔助色) */
+    --muted: #6b8299;       /* 柔灰藍 */
+    --border: rgba(200,223,240,0.3); /* 極細邊框色 */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* 整體基礎字級放大 */
+  html {
+    font-size: 17px; /* 預設為 16px，稍微調大根字體，所有 rem 單位都會跟著放大 */
+  }
 
   body {
     background: var(--deep);
@@ -33,49 +36,64 @@
     overflow-x: hidden;
   }
 
-  /* ── HERO ── */
+  /* ── 地圖連結樣式 ── */
+  .map-link {
+    color: var(--amber);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(244,168,70,0.5);
+    padding-bottom: 1px;
+    transition: opacity 0.2s ease;
+  }
+  .map-link:active {
+    opacity: 0.5;
+  }
+
+  /* ── 開場 HERO 區塊 (含雪花動畫) ── */
   .hero {
     position: relative;
     height: 100vh;
-    min-height: 600px;
+    min-height: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     overflow: hidden;
+    /* 深藍漸層背景 */
     background: linear-gradient(160deg, #0a1520 0%, #1a2e45 50%, #0d2235 100%);
   }
 
-  .hero-bg {
+  /* 漸層背景裝飾球 */
+  .hero-bg-accent {
     position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 110%, rgba(232,117,58,0.12) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 20% 20%, rgba(200,223,240,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 50% at 80% 10%, rgba(45,74,107,0.3) 0%, transparent 60%);
+    background: 
+      radial-gradient(ellipse 80% 60% at 50% 110%, rgba(232,117,58,0.1) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 20% 20%, rgba(200,223,240,0.05) 0%, transparent 60%);
   }
 
+  /* 雪花容器 */
   .snowflakes {
     position: absolute; inset: 0; pointer-events: none;
   }
   .snowflake {
     position: absolute;
     width: 3px; height: 3px;
-    background: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.7);
     border-radius: 50%;
     animation: fall linear infinite;
   }
 
+  /* 雪花飄落動畫 */
   @keyframes fall {
     0% { transform: translateY(-10px) translateX(0); opacity: 0; }
     10% { opacity: 1; }
-    90% { opacity: 0.4; }
+    90% { opacity: 0.5; }
     100% { transform: translateY(100vh) translateX(30px); opacity: 0; }
   }
 
   .hero-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     letter-spacing: 0.3em;
     color: var(--orange);
     text-transform: uppercase;
@@ -86,10 +104,10 @@
 
   .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-size: clamp(3rem, 7vw, 4.5rem);
     font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
     margin-bottom: 0.5rem;
     opacity: 0;
     animation: fadeUp 1s 0.5s forwards;
@@ -102,9 +120,9 @@
 
   .hero-sub {
     font-family: 'Shippori Mincho', serif;
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
     color: var(--ice);
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     margin-bottom: 2.5rem;
     opacity: 0;
     animation: fadeUp 1s 0.7s forwards;
@@ -113,7 +131,7 @@
   .hero-meta {
     display: flex; gap: 2rem;
     font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
+    font-size: 0.85rem;
     letter-spacing: 0.15em;
     color: var(--muted);
     opacity: 0;
@@ -128,7 +146,7 @@
     display: flex; flex-direction: column;
     align-items: center; gap: 0.5rem;
     font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     letter-spacing: 0.2em;
     color: var(--muted);
     opacity: 0;
@@ -136,36 +154,36 @@
   }
 
   .scroll-line {
-    width: 1px; height: 40px;
+    width: 1px; height: 35px;
     background: linear-gradient(to bottom, var(--muted), transparent);
-    animation: pulse 2s 2s infinite;
+    animation: pulse 2s infinite;
   }
 
-  @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+  @keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── LAYOUT ── */
+  /* ── 內容版面設定 ── */
   .container {
-    max-width: 960px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
   }
 
-  section { padding: 5rem 0; }
+  section { padding: 4rem 0; }
 
-  /* ── SECTION HEADER ── */
+  /* ── 區塊標題 ── */
   .sec-header {
-    display: flex; align-items: baseline; gap: 1.2rem;
-    margin-bottom: 3rem;
+    display: flex; align-items: baseline; gap: 1rem;
+    margin-bottom: 2.5rem;
     border-bottom: 1px solid var(--border);
-    padding-bottom: 1rem;
+    padding-bottom: 0.8rem;
   }
   .sec-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.3em;
     color: var(--orange);
     text-transform: uppercase;
@@ -176,27 +194,27 @@
     font-weight: 700;
   }
 
-  /* ── DAY CARDS ── */
-  .days-grid {
-    display: flex; flex-direction: column; gap: 2rem;
+  /* ── 行程卡片 ── */
+  .days-list {
+    display: flex; flex-direction: column; gap: 1.5rem;
   }
 
   .day-card {
-    background: rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.02);
     border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
     transition: border-color 0.3s;
   }
-  .day-card:hover { border-color: rgba(200,223,240,0.6); }
+  .day-card:hover { border-color: rgba(200,223,240,0.5); }
 
   .day-header {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
-    gap: 1.5rem;
-    padding: 1.5rem 2rem;
-    background: rgba(45,74,107,0.2);
+    gap: 1.2rem;
+    padding: 1.2rem 1.8rem;
+    background: rgba(45,74,107,0.1);
     border-bottom: 1px solid var(--border);
   }
 
@@ -208,129 +226,122 @@
     line-height: 1;
   }
 
-  .day-info { }
   .day-date {
     font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     letter-spacing: 0.2em;
     color: var(--muted);
     margin-bottom: 0.2rem;
   }
   .day-title {
     font-family: 'Shippori Mincho', serif;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: var(--snow);
   }
 
   .day-weather {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--muted);
     text-align: right;
-    line-height: 1.6;
+    line-height: 1.5;
     font-family: 'DM Mono', monospace;
   }
-  .day-weather .temp { color: var(--ice); font-size: 0.85rem; }
+  .day-weather .temp { color: var(--ice); font-size: 0.95rem; }
 
   .day-body {
-    padding: 1.8rem 2rem;
-    display: flex; flex-direction: column; gap: 1.5rem;
+    padding: 1.5rem 1.8rem;
+    display: flex; flex-direction: column; gap: 1.4rem;
   }
 
   .day-section { }
   .day-section-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
+    font-size: 0.75rem;
     letter-spacing: 0.25em;
     color: var(--orange);
     text-transform: uppercase;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.8rem;
   }
-
-  .item-list { display: flex; flex-direction: column; gap: 0.6rem; }
 
   .item {
     display: flex; align-items: flex-start; gap: 0.8rem;
-    font-size: 0.88rem;
+    font-size: 1rem; /* 字體放大 */
     line-height: 1.6;
-    color: rgba(245,247,250,0.85);
+    color: rgba(245,247,250,0.9);
+    margin-bottom: 0.6rem;
   }
+  .item:last-child { margin-bottom: 0; }
 
-  .item-icon { flex-shrink: 0; font-size: 1rem; margin-top: 0.05rem; }
+  .item-icon { flex-shrink: 0; font-size: 1.1rem; margin-top: 0.1rem; }
 
   .tag {
     display: inline-block;
-    padding: 0.15rem 0.6rem;
+    padding: 0.15rem 0.5rem;
     border-radius: 3px;
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.75rem; /* 標籤字體放大 */
     letter-spacing: 0.05em;
     margin-left: 0.5rem;
     vertical-align: middle;
   }
-  .tag-red    { background: rgba(192,57,43,0.2); color: #e74c3c; border: 1px solid rgba(192,57,43,0.3); }
-  .tag-yellow { background: rgba(244,168,70,0.15); color: var(--amber); border: 1px solid rgba(244,168,70,0.3); }
-  .tag-green  { background: rgba(46,125,94,0.2); color: #2ecc71; border: 1px solid rgba(46,125,94,0.3); }
-  .tag-blue   { background: rgba(52,152,219,0.15); color: var(--ice); border: 1px solid rgba(52,152,219,0.3); }
+  .tag-red    { background: rgba(192,57,43,0.15); color: #e74c3c; border: 1px solid rgba(192,57,43,0.3); }
+  .tag-yellow { background: rgba(244,168,70,0.12); color: var(--amber); border: 1px solid rgba(244,168,70,0.3); }
+  .tag-green  { background: rgba(46,125,94,0.15); color: #2ecc71; border: 1px solid rgba(46,125,94,0.3); }
+  .tag-blue   { background: rgba(52,152,219,0.12); color: var(--ice); border: 1px solid rgba(52,152,219,0.3); }
 
   .note {
-    background: rgba(232,117,58,0.07);
+    background: rgba(232,117,58,0.06);
     border-left: 2px solid var(--orange);
-    padding: 0.7rem 1rem;
-    border-radius: 0 6px 6px 0;
-    font-size: 0.83rem;
-    color: rgba(245,247,250,0.75);
-    line-height: 1.6;
+    padding: 0.8rem 1rem;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.95rem; /* 備註字體放大 */
+    color: rgba(245,247,250,0.85);
+    line-height: 1.5;
   }
 
-  .highlight-box {
-    background: rgba(200,223,240,0.05);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1rem 1.2rem;
-  }
-
-  /* ── TRAINS TABLE ── */
+  /* ── 時刻表表格 ── */
   .train-table {
     width: 100%;
     border-collapse: collapse;
     font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 0.9rem; /* 表格字體放大 */
+    margin: 0.5rem 0;
   }
   .train-table th {
     color: var(--muted);
     font-weight: 400;
     letter-spacing: 0.1em;
-    padding: 0.4rem 0.8rem;
+    padding: 0.4rem 0.6rem;
     border-bottom: 1px solid var(--border);
     text-align: left;
   }
   .train-table td {
-    padding: 0.5rem 0.8rem;
-    border-bottom: 1px solid rgba(200,223,240,0.1);
-    color: rgba(245,247,250,0.85);
+    padding: 0.6rem 0.6rem;
+    border-bottom: 1px solid rgba(200,223,240,0.08);
+    color: rgba(245,247,250,0.9);
   }
   .train-table tr:last-child td { border-bottom: none; }
   .train-table .arr { color: var(--amber); }
 
-  /* ── TOOLBOX ── */
-  .toolbox-grid {
+  /* ── 底部工具箱 ── */
+  .toolbox {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
   }
-  @media (max-width: 640px) { .toolbox-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .toolbox { grid-template-columns: 1fr; } }
 
   .tool-card {
-    background: rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.02);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 1.5rem;
   }
   .tool-card.full { grid-column: 1 / -1; }
   .tool-card h3 {
     font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.25em;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
     color: var(--orange);
     text-transform: uppercase;
     margin-bottom: 1rem;
@@ -339,101 +350,74 @@
   .flight-row {
     display: flex; justify-content: space-between; align-items: center;
     padding: 0.6rem 0;
-    border-bottom: 1px solid rgba(200,223,240,0.1);
-    font-size: 0.82rem;
+    border-bottom: 1px solid rgba(200,223,240,0.08);
+    font-size: 0.95rem;
   }
   .flight-row:last-child { border-bottom: none; }
   .flight-code { font-family: 'DM Mono', monospace; color: var(--amber); }
-  .flight-time { color: var(--ice); font-family: 'DM Mono', monospace; font-size: 0.75rem; }
+  .flight-time { color: var(--ice); font-family: 'DM Mono', monospace; font-size: 0.85rem; }
 
-  .hotel-card-inner { display: flex; flex-direction: column; gap: 1rem; }
-  .hotel-item { }
-  .hotel-name { font-size: 0.9rem; color: var(--snow); margin-bottom: 0.3rem; }
-  .hotel-detail { font-size: 0.78rem; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .hotel-item { margin-bottom: 1rem; }
+  .hotel-item:last-child { margin-bottom: 0; }
+  .hotel-name { font-size: 1.05rem; color: var(--snow); margin-bottom: 0.3rem; }
+  .hotel-detail { font-size: 0.85rem; color: var(--muted); font-family: 'DM Mono', monospace; line-height: 1.4; }
 
-  .tel-list { display: flex; flex-direction: column; gap: 0.7rem; }
-  .tel-item { display: flex; justify-content: space-between; align-items: center; }
-  .tel-label { font-size: 0.82rem; color: rgba(245,247,250,0.8); }
-  .tel-num { font-family: 'DM Mono', monospace; color: var(--amber); font-size: 0.82rem; }
+  .tel-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+  .tel-item:last-child { margin-bottom: 0; }
+  .tel-label { font-size: 0.95rem; color: rgba(245,247,250,0.85); }
+  .tel-num { font-family: 'DM Mono', monospace; color: var(--amber); font-size: 0.95rem; }
 
   .budget-table {
     width: 100%; border-collapse: collapse;
-    font-size: 0.82rem;
+    font-size: 0.9rem;
   }
   .budget-table th {
     color: var(--muted);
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     letter-spacing: 0.1em;
     padding: 0.4rem 0;
     border-bottom: 1px solid var(--border);
     text-align: left;
   }
   .budget-table td {
-    padding: 0.55rem 0;
-    border-bottom: 1px solid rgba(200,223,240,0.08);
-    color: rgba(245,247,250,0.85);
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(200,223,240,0.06);
+    color: rgba(245,247,250,0.9);
   }
   .budget-table tr:last-child td { border-bottom: none; }
   .budget-table .yen { color: var(--amber); font-family: 'DM Mono', monospace; }
-  .budget-table .note-cell { color: var(--muted); font-size: 0.75rem; }
 
-  /* ── FOOTER ── */
+  /* ── 頁尾 ── */
   footer {
     border-top: 1px solid var(--border);
     padding: 3rem 0;
     text-align: center;
     color: var(--muted);
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
   }
 
-  /* ── DIVIDER ── */
-  .divider {
-    width: 100%; height: 1px;
-    background: linear-gradient(to right, transparent, var(--border), transparent);
-    margin: 0.5rem 0;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
+  /* ── 響應式微調 ── */
+  @media (max-width: 600px) {
     .day-header { grid-template-columns: auto 1fr; }
     .day-weather { display: none; }
-    .day-body { padding: 1.2rem; }
+    .day-body { padding: 1.5rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- Snowflake animation -->
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const container = document.querySelector('.snowflakes');
-    for (let i = 0; i < 40; i++) {
-      const s = document.createElement('div');
-      s.className = 'snowflake';
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.width = s.style.height = (Math.random() * 3 + 1) + 'px';
-      s.style.animationDuration = (Math.random() * 10 + 8) + 's';
-      s.style.animationDelay = (Math.random() * 10) + 's';
-      s.style.opacity = Math.random() * 0.6 + 0.2;
-      container.appendChild(s);
-    }
-  });
-</script>
-
-<!-- HERO -->
 <header class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-bg-accent"></div>
   <div class="snowflakes"></div>
-  <p class="hero-label">Travel Guide · 2026</p>
+  <p class="hero-label">Guide · 2026</p>
   <h1 class="hero-title">石打丸山 <span>&</span> 東京<br>滑雪行</h1>
   <p class="hero-sub">越後湯澤 · 上野 · 御徒町</p>
   <div class="hero-meta">
-    <div>出發 <span>3月9日</span></div>
-    <div>返程 <span>3月14日</span></div>
-    <div>人數 <span>2 人</span></div>
+    <div>03月09日 — 03月14日</div>
+    <div>2 人 | 滑雪課程</div>
   </div>
   <div class="scroll-hint">
     <span>SCROLL</span>
@@ -441,24 +425,22 @@
   </div>
 </header>
 
-<!-- ITINERARY -->
 <main>
 <section>
   <div class="container">
     <div class="sec-header">
       <span class="sec-label">Itinerary</span>
-      <h2 class="sec-title">每日行程</h2>
+      <h2 class="sec-title">每日行程卡片</h2>
     </div>
 
-    <div class="days-grid">
+    <div class="days-list">
 
-      <!-- DAY 1 -->
       <div class="day-card">
         <div class="day-header">
           <div class="day-num">01</div>
           <div class="day-info">
             <div class="day-date">3 / 9 (MON)</div>
-            <div class="day-title">抵達 & 移動 🚄</div>
+            <div class="day-title">抵達與移動</div>
           </div>
           <div class="day-weather">
             <div>越後湯澤</div>
@@ -467,91 +449,52 @@
           </div>
         </div>
         <div class="day-body">
-
           <div class="day-section">
-            <div class="day-section-label">✈️ 航班</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">✈️</span>
-                <span>星宇 <strong>JX802</strong>（我 & Kitty）｜ 10:10 TPE ➔ 14:20 NRT</span>
-              </div>
+            <div class="day-section-label">航班去程</div>
+            <div class="item">
+              <span class="item-icon">✈️</span>
+              <span>星宇 JX802（我 & Kitty）｜ 10:10 TPE → 14:20 NRT</span>
             </div>
           </div>
-
-          <div class="divider"></div>
-
           <div class="day-section">
-            <div class="day-section-label">🚆 交通</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🚶</span>
-                <span>京成上野站 ➔ 步行 5 分鐘 ➔ JR 上野站</span>
-              </div>
-              <div class="item">
-                <span class="item-icon">🚄</span>
-                <span>Skyliner：建議班次 15:42、16:02、16:42（已網購，臉部辨識進站）</span>
-              </div>
+            <div class="day-section-label">交通手段</div>
+            <div class="item">
+              <span class="item-icon">🚄</span>
+              <span>Skyliner（已網購）➔ <a href="https://maps.app.goo.gl/v4zyarcU2NV85bT9A" target="_blank" class="map-link">京成上野站</a> ➔ 步行 5 分鐘 ➔ <a href="https://maps.app.goo.gl/pJB4jnNKt8CkxHuU7" target="_blank" class="map-link">JR 上野站</a></span>
             </div>
-            <div style="margin-top:1rem;">
-              <div class="note" style="margin-bottom:0.8rem;">
-                ⚠️ 新幹線進站請把兩張紙本車票疊一起投入閘門，切勿刷手機 Suica！
-              </div>
-              <table class="train-table">
-                <thead>
-                  <tr>
-                    <th>版本</th><th>車次</th><th>出發</th><th>抵達</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>餘裕版</td>
-                    <td>Toki 335</td>
-                    <td>17:38</td>
-                    <td class="arr">18:45</td>
-                  </tr>
-                  <tr>
-                    <td>完美版</td>
-                    <td>Tanigawa 407</td>
-                    <td>17:58</td>
-                    <td class="arr">19:21</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="item">
+              <span class="item-icon">🚄</span>
+              <span>新幹線參考（於上野站購實體票）：
+                <br>・餘裕版：Toki 335 (17:38 → 18:45)
+                <br>・完美版：Tanigawa 407 (17:58 → 19:21)
+              </span>
+            </div>
+            <div class="note">⚠️ 新幹線請把兩張紙本車票疊一起投入閘門，切勿刷手機 Suica！</div>
+          </div>
+          <div class="day-section">
+            <div class="day-section-label">住宿與接駁</div>
+            <div class="item">
+              <span class="item-icon">🚌</span>
+              <span>接駁車：預約 <strong>19:30</strong> <a href="https://www.google.com/maps/search/?api=1&query=越後湯澤站" target="_blank" class="map-link">越後湯澤站</a> 出發（2 人）</span>
+            </div>
+            <div class="item">
+              <span class="item-icon">🏨</span>
+              <span><a href="https://www.google.com/maps/search/?api=1&query=丸山溫泉+古城館" target="_blank" class="map-link">丸山溫泉 古城館</a> <span class="tag tag-blue">BKG987654321</span></span>
+            </div>
+            <div class="item">
+              <span class="item-icon">📦</span>
+              <span>樂天包裹代收（訂單末四碼：210372）</span>
             </div>
           </div>
-
-          <div class="divider"></div>
-
-          <div class="day-section">
-            <div class="day-section-label">🏨 住宿 & 接駁</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🚌</span>
-                <span>接駁車：<strong>19:30</strong> 越後湯澤站出發（2 人）</span>
-              </div>
-              <div class="item">
-                <span class="item-icon">🏨</span>
-                <span>丸山溫泉 古城館
-                  <span class="tag tag-blue">BKG987654321</span>
-                </span>
-              </div>
-              <div class="item">
-                <span class="item-icon">📦</span>
-                <span>樂天包裹已請飯店代收（訂單 250374-20260305-0276911242）</span>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
 
-      <!-- DAY 2 -->
       <div class="day-card">
         <div class="day-header">
           <div class="day-num">02</div>
           <div class="day-info">
             <div class="day-date">3 / 10 (TUE)</div>
-            <div class="day-title">滑雪課程 Day 1 ⛷️</div>
+            <div class="day-title">滑雪課程 初日</div>
           </div>
           <div class="day-weather">
             <div>石打丸山</div>
@@ -560,60 +503,45 @@
           </div>
         </div>
         <div class="day-body">
-
           <div class="day-section">
-            <div class="day-section-label">🏂 活動</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">⛷️</span>
-                <span>上午：租借裝備 — 飯店 ¥8,500 ／ 雪場 ¥18,500，不去雪物嚴選，節省移動時間</span>
-              </div>
-              <div class="item">
-                <span class="item-icon">🎿</span>
-                <span>下午：雪道練習</span>
-              </div>
+            <div class="day-section-label">活動概要</div>
+            <div class="item">
+              <span class="item-icon">⛷️</span>
+              <span>午前：抵達 <a href="https://www.google.com/maps/search/?api=1&query=石打丸山滑雪場" target="_blank" class="map-link">石打丸山滑雪場</a> 租借裝備（飯店 ¥8,500 ／ 雪場 ¥18,500）。不去雪物嚴選。</span>
+            </div>
+            <div class="item">
+              <span class="item-icon">⛷️</span>
+              <span>午後：雪道練習</span>
             </div>
           </div>
-
-          <div class="divider"></div>
-
           <div class="day-section">
-            <div class="day-section-label">🍽️ 午餐推薦</div>
-            <div class="note" style="margin-bottom:0.8rem;">💡 午餐時間不用下山！雪道上就有一整排餐廳。</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🥩</span>
-                <span>ウィンターハウス大丸（大丸燒肉）<span class="tag tag-red">必吃</span> — 現烤炭火燒肉</span>
-              </div>
-              <div class="item">
-                <span class="item-icon">🥞</span>
-                <span>The Veranda（奧地利餐廳）<span class="tag tag-yellow">必點</span> — 招牌荷蘭鐵鍋鬆餅</span>
-              </div>
+            <div class="day-section-label">食事推薦</div>
+            <div class="note">💡 午餐不用下山！雪道餐廳排。</div>
+            <div class="item">
+              <span class="item-icon">🥩</span>
+              <span>ウィンターハウス大丸 <span class="tag tag-red">必吃</span> — 現烤炭火燒肉</span>
+            </div>
+            <div class="item">
+              <span class="item-icon">🥞</span>
+              <span>奧地利餐廳 The Veranda <span class="tag tag-yellow">必點</span> — 荷蘭鐵鍋鬆餅</span>
             </div>
           </div>
-
-          <div class="divider"></div>
-
           <div class="day-section">
-            <div class="day-section-label">🏨 晚餐</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🍱</span>
-                <span>古城館 — 晚餐已預約（2 人）</span>
-              </div>
+            <div class="day-section-label">住宿晚餐</div>
+            <div class="item">
+              <span class="item-icon">🍱</span>
+              <span>古城館 — 晚餐已預約（2 人）</span>
             </div>
           </div>
-
         </div>
       </div>
 
-      <!-- DAY 3 -->
       <div class="day-card">
         <div class="day-header">
           <div class="day-num">03</div>
           <div class="day-info">
             <div class="day-date">3 / 11 (WED)</div>
-            <div class="day-title">滑雪課程 Day 2 ⛷️</div>
+            <div class="day-title">滑雪課程 Day 2</div>
           </div>
           <div class="day-weather">
             <div>石打丸山</div>
@@ -623,34 +551,28 @@
         </div>
         <div class="day-body">
           <div class="day-section">
-            <div class="day-section-label">🍽️ 早餐</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">☕</span>
-                <span>古城館內用（2 人，<strong>已去信追加</strong>）</span>
-              </div>
+            <div class="day-section-label">朝食</div>
+            <div class="item">
+              <span class="item-icon">☕</span>
+              <span>古城館內用（2 人，已追加）</span>
             </div>
           </div>
-          <div class="divider"></div>
           <div class="day-section">
-            <div class="day-section-label">🏂 活動</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🎿</span>
-                <span>全日：滑雪課程 / 自由練習</span>
-              </div>
+            <div class="day-section-label">活動概要</div>
+            <div class="item">
+              <span class="item-icon">🎿</span>
+              <span>全日：<a href="https://www.google.com/maps/search/?api=1&query=石打丸山滑雪場" target="_blank" class="map-link">石打丸山滑雪場</a> 滑雪課程與自由練習</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- DAY 4 -->
       <div class="day-card">
         <div class="day-header">
           <div class="day-num">04</div>
           <div class="day-info">
             <div class="day-date">3 / 12 (THU)</div>
-            <div class="day-title">Solo Ski & 移動東京 🗼</div>
+            <div class="day-title">Solo Ski 與移動東京</div>
           </div>
           <div class="day-weather">
             <div>越後湯澤 / 東京</div>
@@ -659,81 +581,67 @@
           </div>
         </div>
         <div class="day-body">
-
           <div class="day-section">
-            <div class="day-section-label">🍳 早餐 & 退房</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">☕</span>
-                <span>古城館早餐（已預約，2 人）➔ 退房 ➔ 寄放行李</span>
-              </div>
-              <div class="item">
-                <span class="item-icon">🎿</span>
-                <span>全日自主滑雪（石打丸山）</span>
-              </div>
+            <div class="day-section-label">朝食與活動</div>
+            <div class="item">
+              <span class="item-icon">🍳</span>
+              <span>古城館早餐（2 人）➔ 退房與行李寄放</span>
+            </div>
+            <div class="item">
+              <span class="item-icon">🎿</span>
+              <span>上午至下午：自主滑雪（<a href="https://www.google.com/maps/search/?api=1&query=石打丸山滑雪場" target="_blank" class="map-link">石打丸山</a>）</span>
             </div>
           </div>
-
-          <div class="divider"></div>
-
           <div class="day-section">
-            <div class="day-section-label">🚆 回東京新幹線</div>
-            <table class="train-table" style="margin-bottom:0.8rem;">
+            <div class="day-section-label">交通返程 (越後湯澤 ➔ 上野)</div>
+            <div class="item">
+              <span class="item-icon">🚄</span>
+              <span><strong>17:00 頃</strong>：歸還裝備，轉新幹線返東京</span>
+            </div>
+            <table class="train-table">
               <thead>
-                <tr><th>車次</th><th>越後湯澤</th><th>上野</th><th>車程</th></tr>
+                <tr><th>車次</th><th>越後湯澤發</th><th>上野抵達</th><th>車程</th></tr>
               </thead>
               <tbody>
                 <tr><td>Toki 324</td><td>15:12</td><td class="arr">16:22</td><td>1h10m</td></tr>
                 <tr><td>Tanigawa 412</td><td>16:00</td><td class="arr">17:14</td><td>1h14m</td></tr>
                 <tr><td>Toki 328</td><td>16:18</td><td class="arr">17:34</td><td>1h16m</td></tr>
-                <tr><td>Tanigawa 86</td><td>17:08</td><td class="arr">18:14</td><td>1h6m</td></tr>
+                <tr><td>Tanigawa 86</td><td>17:08</td><td class="arr">18:14</td><td>1h06m</td></tr>
               </tbody>
             </table>
-            <div class="note">💡 若搭 17:08 Tanigawa 86，建議 16:00–16:30 歸還裝備，才有時間逛車站伴手禮！</div>
+            <div class="note">💡 搭乘 17:08 Tanigawa 86，建議裝備於 16:30前歸還，才有時間逛車站伴手禮。</div>
           </div>
-
-          <div class="divider"></div>
-
           <div class="day-section">
-            <div class="day-section-label">🛍️ 越後湯澤站 CoCoLo 湯澤</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🍶</span>
-                <span>ぽんしゅ館 <span class="tag tag-red">必吃</span> — 投幣品嚐清酒</span>
-              </div>
-              <div class="item">
-                <span class="item-icon">🍙</span>
-                <span>爆弾おにぎり <span class="tag tag-yellow">必點</span> — 明太子口味，份量大建議兩人分食</span>
-              </div>
-              <div class="item">
-                <span class="item-icon">🛒</span>
-                <span>伴手禮 <span class="tag tag-green">必買</span> — 南魚沼越光米（免申報 1kg）、新潟地酒、笹糰子</span>
-              </div>
+            <div class="day-section-label">車站採買 (CoCoLo 湯澤)</div>
+            <div class="item">
+              <span class="item-icon">🍶</span>
+              <span>ぽんしゅ館 <span class="tag tag-red">必吃</span> (投幣品清酒)</span>
+            </div>
+            <div class="item">
+              <span class="item-icon">🍙</span>
+              <span>爆彈飯糰 (明太子) <span class="tag tag-yellow">必點</span> — 份量大，兩人分食</span>
+            </div>
+            <div class="item">
+              <span class="item-icon">🛒</span>
+              <span>伴手禮 <span class="tag tag-green">必買</span> — 南魚沼產越光米（免申報 1kg）、笹糰子</span>
             </div>
           </div>
-
-          <div class="divider"></div>
-
           <div class="day-section">
-            <div class="day-section-label">🏨 住宿</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🏙️</span>
-                <span>Tosei Hotel Cocone Ueno Okachimachi（上野御徒町）</span>
-              </div>
+            <div class="day-section-label">住宿</div>
+            <div class="item">
+              <span class="item-icon">🏙️</span>
+              <span><a href="https://maps.app.goo.gl/PQtE1nnAkduVPm4U7" target="_blank" class="map-link">Tosei Hotel Cocone Ueno Okachimachi</a>（上野御徒町）</span>
             </div>
           </div>
-
         </div>
       </div>
 
-      <!-- DAY 5 -->
       <div class="day-card">
         <div class="day-header">
           <div class="day-num">05</div>
           <div class="day-info">
             <div class="day-date">3 / 13 (FRI)</div>
-            <div class="day-title">東京自由行 🛍️</div>
+            <div class="day-title">東京散策</div>
           </div>
           <div class="day-weather">
             <div>東京 上野</div>
@@ -742,51 +650,41 @@
           </div>
         </div>
         <div class="day-body">
-
           <div class="day-section">
-            <div class="day-section-label">🛍️ 活動</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🗺️</span>
-                <span>上野阿美橫町 — 全日逛街採買</span>
-              </div>
+            <div class="day-section-label">活動概要</div>
+            <div class="item">
+              <span class="item-icon">🗺️</span>
+              <span>全日：市區逛街採買（阿美橫町）</span>
             </div>
           </div>
-
-          <div class="divider"></div>
-
           <div class="day-section">
-            <div class="day-section-label">🍽️ 美食 & 伴手禮</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🍖</span>
-                <span>とんかつ山家炸豬排 <span class="tag tag-red">必吃</span></span>
-              </div>
-              <div class="item">
-                <span class="item-icon">🥩</span>
-                <span>阿美橫町 肉の大山 <span class="tag tag-red">必吃</span> — 和牛炸肉餅 / 可樂餅 <span class="tag tag-yellow">必點</span>，外帶邊走邊吃</span>
-              </div>
-              <div class="item">
-                <span class="item-icon">🍬</span>
-                <span>二木の菓子 <span class="tag tag-green">必買</span> — 超大免稅零食天堂</span>
-              </div>
-              <div class="item">
-                <span class="item-icon">🛒</span>
-                <span>多慶屋 <span class="tag tag-green">必買</span> — 「上野珍味鱈魚芝麻條」推薦掃貨</span>
-              </div>
+            <div class="day-section-label">美食與伴手禮</div>
+            <div class="item">
+              <span class="item-icon">🍗</span>
+              <span>とんかつ山家炸豬排 <span class="tag tag-red">必吃</span></span>
+            </div>
+            <div class="item">
+              <span class="item-icon">🥩</span>
+              <span>阿美橫町 肉の大山 <span class="tag tag-red">必吃</span> — 和牛炸肉餅/可樂餅 <span class="tag tag-yellow">必點</span></span>
+            </div>
+            <div class="item">
+              <span class="item-icon">🍬</span>
+              <span>二木の菓子 <span class="tag tag-green">必買</span></span>
+            </div>
+            <div class="item">
+              <span class="item-icon">🎁</span>
+              <span>多慶屋「上野珍味鱈魚芝麻條」<span class="tag tag-green">必買</span></span>
             </div>
           </div>
-
         </div>
       </div>
 
-      <!-- DAY 6 -->
       <div class="day-card">
         <div class="day-header">
           <div class="day-num">06</div>
           <div class="day-info">
             <div class="day-date">3 / 14 (SAT)</div>
-            <div class="day-title">滿載回程 ✈️</div>
+            <div class="day-title">滿載回程</div>
           </div>
           <div class="day-weather">
             <div>東京 / 成田</div>
@@ -796,26 +694,21 @@
         </div>
         <div class="day-body">
           <div class="day-section">
-            <div class="day-section-label">🚆 前往機場</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🚄</span>
-                <span>京成上野站 ➔ Skyliner 前往成田機場（建議 <strong>11:00 前</strong>抵達機場）</span>
-              </div>
+            <div class="day-section-label">交通手段</div>
+            <div class="item">
+              <span class="item-icon">🚄</span>
+              <span><a href="https://maps.app.goo.gl/v4zyarcU2NV85bT9A" target="_blank" class="map-link">京成上野站</a> ➔ Skyliner（建議 <strong>11:00前</strong> 抵達成田機場）</span>
             </div>
           </div>
-          <div class="divider"></div>
           <div class="day-section">
-            <div class="day-section-label">✈️ 回程航班</div>
-            <div class="item-list">
-              <div class="item">
-                <span class="item-icon">🧑</span>
-                <span>我：星宇 <strong>JX801</strong>｜13:45 NRT ➔ 16:45 TPE</span>
-              </div>
-              <div class="item">
-                <span class="item-icon">👩</span>
-                <span>Kitty：長榮 <strong>BR183</strong>｜13:00 NRT ➔ 16:05 TPE</span>
-              </div>
+            <div class="day-section-label">航班回程</div>
+            <div class="item">
+              <span class="item-icon">🧑</span>
+              <span>我：星宇 JX801（13:45 → 16:45 TPE）</span>
+            </div>
+            <div class="item">
+              <span class="item-icon">👩</span>
+              <span>Kitty：長榮 BR183（13:00 → 16:05 TPE）</span>
             </div>
           </div>
         </div>
@@ -825,120 +718,80 @@
   </div>
 </section>
 
-<!-- TOOLBOX -->
-<section style="padding-top:0; padding-bottom: 5rem;">
+<section style="background: var(--navy); padding-bottom: 5rem;">
   <div class="container">
     <div class="sec-header">
       <span class="sec-label">Toolbox</span>
       <h2 class="sec-title">實用工具箱</h2>
     </div>
 
-    <div class="toolbox-grid">
+    <div class="toolbox">
 
-      <!-- Flights -->
       <div class="tool-card">
         <h3>✈️ 航班資訊</h3>
         <div class="flight-row">
           <div>
-            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.2rem;">我 — 去程 3/9</div>
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.1rem;">去程 3/9</div>
             <div class="flight-code">JX802</div>
           </div>
           <div class="flight-time">10:10 TPE → 14:20 NRT</div>
         </div>
         <div class="flight-row">
           <div>
-            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.2rem;">我 — 回程 3/14</div>
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.1rem;">我 — 回程 3/14</div>
             <div class="flight-code">JX801</div>
           </div>
           <div class="flight-time">13:45 NRT → 16:45 TPE</div>
         </div>
         <div class="flight-row">
           <div>
-            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.2rem;">Kitty — 去程 3/9</div>
-            <div class="flight-code">JX802</div>
-          </div>
-          <div class="flight-time">10:10 TPE → 14:20 NRT</div>
-        </div>
-        <div class="flight-row">
-          <div>
-            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.2rem;">Kitty — 回程 3/14</div>
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.1rem;">Kitty — 回程 3/14</div>
             <div class="flight-code">BR183</div>
           </div>
           <div class="flight-time">13:00 NRT → 16:05 TPE</div>
         </div>
       </div>
 
-      <!-- Hotels -->
       <div class="tool-card">
-        <h3>🏨 住宿資訊</h3>
-        <div class="hotel-card-inner">
-          <div class="hotel-item">
-            <div class="hotel-name">丸山溫泉 古城館（Kojokan）</div>
-            <div class="hotel-detail" style="margin-bottom:0.3rem;">3/9 – 3/12 · 前三晚</div>
-            <div class="hotel-detail">入住代碼：<span style="color:var(--amber)">BKG987654321</span></div>
-            <div class="hotel-detail" style="margin-top:0.3rem;color:rgba(245,247,250,0.6);">含 3/10、3/11、3/12 早餐｜3/9 晚餐已訂｜樂天包裹待收</div>
-          </div>
-          <div class="divider"></div>
-          <div class="hotel-item">
-            <div class="hotel-name">Tosei Hotel Cocone Ueno Okachimachi</div>
-            <div class="hotel-detail">3/12 – 3/14 · 後兩晚</div>
-            <div class="hotel-detail" style="margin-top:0.2rem;color:rgba(245,247,250,0.6);">位置：上野御徒町</div>
-          </div>
+        <h3>🏨 住宿與預約</h3>
+        <div class="hotel-item">
+          <div class="hotel-name"><a href="https://www.google.com/maps/search/?api=1&query=丸山溫泉+古城館" target="_blank" class="map-link">丸山溫泉 古城館</a> <br>(3/9 – 3/12)</div>
+          <div class="hotel-detail">入住代碼：BKG987654321</div>
+          <div class="hotel-detail" style="color:var(--muted)">含3/10、11、12朝食｜樂天包裹飯店代收</div>
+        </div>
+        <div class="hotel-item">
+          <div class="hotel-name"><a href="https://maps.app.goo.gl/PQtE1nnAkduVPm4U7" target="_blank" class="map-link">Tosei Hotel Cocone</a> <br>(3/12 – 3/14)</div>
+          <div class="hotel-detail">位置：上野御徒町</div>
         </div>
       </div>
 
-      <!-- Emergency Contacts -->
       <div class="tool-card">
         <h3>📞 緊急聯絡</h3>
-        <div class="tel-list">
-          <div class="tel-item">
-            <div class="tel-label">日本報警 / 交通事故</div>
-            <div class="tel-num">110</div>
-          </div>
-          <div class="tel-item">
-            <div class="tel-label">救護車 / 消防</div>
-            <div class="tel-num">119</div>
-          </div>
-          <div class="tel-item">
-            <div class="tel-label">旅外急難救助（台灣）</div>
-            <div class="tel-num">001-800-0885-0885</div>
-          </div>
+        <div class="tel-item">
+          <div class="tel-label">日本報警 / 交通事故</div>
+          <div class="tel-num">110</div>
+        </div>
+        <div class="tel-item">
+          <div class="tel-label">日本救護車 / 消防</div>
+          <div class="tel-num">119</div>
+        </div>
+        <div class="tel-item">
+          <div class="tel-label">台灣旅外急難救助</div>
+          <div class="tel-num">001-800-0885-0885</div>
         </div>
       </div>
 
-      <!-- Budget -->
       <div class="tool-card">
         <h3>💰 預算參考</h3>
         <table class="budget-table">
           <thead>
-            <tr><th>項目</th><th>日元</th><th>備註</th></tr>
+            <tr><th>項目</th><th>日元 (預估)</th><th>備註</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>雪票（3日券）</td>
-              <td class="yen">¥20,000</td>
-              <td class="note-cell">單人</td>
-            </tr>
-            <tr>
-              <td>雪板組（3天）</td>
-              <td class="yen">¥8,500~18,500</td>
-              <td class="note-cell">視場地</td>
-            </tr>
-            <tr>
-              <td>Skyliner（單程）</td>
-              <td class="yen">¥2,310</td>
-              <td class="note-cell">已網購</td>
-            </tr>
-            <tr>
-              <td>新幹線（上野↔湯澤）</td>
-              <td class="yen">¥13,160</td>
-              <td class="note-cell">兩人單程</td>
-            </tr>
-            <tr>
-              <td>東京市區交通</td>
-              <td class="yen">依實際</td>
-              <td class="note-cell">Suica</td>
-            </tr>
+            <tr><td>雪票（3日券）</td><td class="yen">¥20,000</td><td>單人</td></tr>
+            <tr><td>雪板租借（3天）</td><td class="yen">¥8,500 ~ 18,500</td><td>視飯店/雪場</td></tr>
+            <tr><td>Skyliner（單程）</td><td class="yen">¥2,310</td><td>已網購</td></tr>
+            <tr><td>去程新幹線</td><td class="yen">¥13,160</td><td>上野→湯澤兩人</td></tr>
           </tbody>
         </table>
       </div>
@@ -950,9 +803,30 @@
 
 <footer>
   <div class="container">
-    <p>石打丸山 & 東京滑雪行 · 2026.03.09 – 03.14 · Have a great trip! ⛷️</p>
+    <p>石打丸山 & 東京滑雪行 ｜ 2026.03.09 — 03.14</p>
   </div>
 </footer>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const snowflakeCount = 40; // 調整雪花數量
+    const container = document.querySelector('.snowflakes');
+    
+    for (let i = 0; i < snowflakeCount; i++) {
+      const flake = document.createElement('div');
+      flake.className = 'snowflake';
+      
+      // 隨機初始設定
+      flake.style.left = Math.random() * 100 + 'vw';
+      flake.style.width = flake.style.height = (Math.random() * 3 + 2) + 'px'; // 大小 2px - 5px
+      flake.style.opacity = Math.random() * 0.6 + 0.3; // 透明度 0.3 - 0.9
+      flake.style.animationDuration = (Math.random() * 15 + 10) + 's'; // 掉落速度 10s - 25s
+      flake.style.animationDelay = (Math.random() * 10) + 's'; // 延遲 0s - 10s
+      
+      container.appendChild(flake);
+    }
+  });
+</script>
 
 </body>
 </html>
